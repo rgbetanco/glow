@@ -1,0 +1,845 @@
+Component: ARM Compiler 5.06 update 4 (build 422) Tool: armlink [4d35d2]
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x0001c0dd
+
+  Load Region LR_IROM1 (Base: 0x0001c000, Size: 0x0000fc54, Max: 0x00064000, ABSOLUTE, COMPRESSED[0x0000fad0])
+
+    Execution Region ER_IROM1 (Base: 0x0001c000, Size: 0x0000fa98, Max: 0x00064000, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x0001c000   0x000000dc   Data   RO         4680    RESET               startup_nrf52832.o
+    0x0001c0dc   0x00000008   Code   RO         6716  * !!!main             c_w.l(__main.o)
+    0x0001c0e4   0x00000034   Code   RO         7386    !!!scatter          c_w.l(__scatter.o)
+    0x0001c118   0x0000005a   Code   RO         7384    !!dczerorl2         c_w.l(__dczerorl2.o)
+    0x0001c172   0x00000002   PAD
+    0x0001c174   0x0000001c   Code   RO         7388    !!handler_zi        c_w.l(__scatter_zi.o)
+    0x0001c190   0x00000000   Code   RO         6641    .ARM.Collect$$_printf_percent$$00000000  c_w.l(_printf_percent.o)
+    0x0001c190   0x00000006   Code   RO         6933    .ARM.Collect$$_printf_percent$$00000001  c_w.l(_printf_n.o)
+    0x0001c196   0x00000006   Code   RO         6637    .ARM.Collect$$_printf_percent$$00000002  c_w.l(_printf_p.o)
+    0x0001c19c   0x00000006   Code   RO         6640    .ARM.Collect$$_printf_percent$$00000003  c_w.l(_printf_f.o)
+    0x0001c1a2   0x00000006   Code   RO         6936    .ARM.Collect$$_printf_percent$$00000004  c_w.l(_printf_e.o)
+    0x0001c1a8   0x00000006   Code   RO         6937    .ARM.Collect$$_printf_percent$$00000005  c_w.l(_printf_g.o)
+    0x0001c1ae   0x00000006   Code   RO         6938    .ARM.Collect$$_printf_percent$$00000006  c_w.l(_printf_a.o)
+    0x0001c1b4   0x0000000a   Code   RO         6943    .ARM.Collect$$_printf_percent$$00000007  c_w.l(_printf_ll.o)
+    0x0001c1be   0x00000006   Code   RO         6935    .ARM.Collect$$_printf_percent$$00000008  c_w.l(_printf_i.o)
+    0x0001c1c4   0x00000006   Code   RO         6638    .ARM.Collect$$_printf_percent$$00000009  c_w.l(_printf_d.o)
+    0x0001c1ca   0x00000006   Code   RO         6639    .ARM.Collect$$_printf_percent$$0000000A  c_w.l(_printf_u.o)
+    0x0001c1d0   0x00000006   Code   RO         6934    .ARM.Collect$$_printf_percent$$0000000B  c_w.l(_printf_o.o)
+    0x0001c1d6   0x00000006   Code   RO         6636    .ARM.Collect$$_printf_percent$$0000000C  c_w.l(_printf_x.o)
+    0x0001c1dc   0x00000006   Code   RO         6940    .ARM.Collect$$_printf_percent$$0000000D  c_w.l(_printf_lli.o)
+    0x0001c1e2   0x00000006   Code   RO         6941    .ARM.Collect$$_printf_percent$$0000000E  c_w.l(_printf_lld.o)
+    0x0001c1e8   0x00000006   Code   RO         6942    .ARM.Collect$$_printf_percent$$0000000F  c_w.l(_printf_llu.o)
+    0x0001c1ee   0x00000006   Code   RO         6947    .ARM.Collect$$_printf_percent$$00000010  c_w.l(_printf_llo.o)
+    0x0001c1f4   0x00000006   Code   RO         6948    .ARM.Collect$$_printf_percent$$00000011  c_w.l(_printf_llx.o)
+    0x0001c1fa   0x0000000a   Code   RO         6944    .ARM.Collect$$_printf_percent$$00000012  c_w.l(_printf_l.o)
+    0x0001c204   0x00000006   Code   RO         6932    .ARM.Collect$$_printf_percent$$00000013  c_w.l(_printf_c.o)
+    0x0001c20a   0x00000006   Code   RO         6635    .ARM.Collect$$_printf_percent$$00000014  c_w.l(_printf_s.o)
+    0x0001c210   0x00000006   Code   RO         6945    .ARM.Collect$$_printf_percent$$00000015  c_w.l(_printf_lc.o)
+    0x0001c216   0x00000006   Code   RO         6946    .ARM.Collect$$_printf_percent$$00000016  c_w.l(_printf_ls.o)
+    0x0001c21c   0x00000004   Code   RO         6939    .ARM.Collect$$_printf_percent$$00000017  c_w.l(_printf_percent_end.o)
+    0x0001c220   0x00000002   Code   RO         6715    .ARM.Collect$$libinit$$00000000  c_w.l(libinit.o)
+    0x0001c222   0x00000004   Code   RO         7005    .ARM.Collect$$libinit$$00000001  c_w.l(libinit2.o)
+    0x0001c226   0x00000000   Code   RO         7008    .ARM.Collect$$libinit$$00000004  c_w.l(libinit2.o)
+    0x0001c226   0x00000008   Code   RO         7009    .ARM.Collect$$libinit$$00000005  c_w.l(libinit2.o)
+    0x0001c22e   0x00000000   Code   RO         7011    .ARM.Collect$$libinit$$0000000A  c_w.l(libinit2.o)
+    0x0001c22e   0x00000000   Code   RO         7013    .ARM.Collect$$libinit$$0000000C  c_w.l(libinit2.o)
+    0x0001c22e   0x00000000   Code   RO         7015    .ARM.Collect$$libinit$$0000000E  c_w.l(libinit2.o)
+    0x0001c22e   0x00000006   Code   RO         7016    .ARM.Collect$$libinit$$0000000F  c_w.l(libinit2.o)
+    0x0001c234   0x00000000   Code   RO         7018    .ARM.Collect$$libinit$$00000011  c_w.l(libinit2.o)
+    0x0001c234   0x0000000c   Code   RO         7019    .ARM.Collect$$libinit$$00000012  c_w.l(libinit2.o)
+    0x0001c240   0x00000000   Code   RO         7020    .ARM.Collect$$libinit$$00000013  c_w.l(libinit2.o)
+    0x0001c240   0x00000000   Code   RO         7022    .ARM.Collect$$libinit$$00000015  c_w.l(libinit2.o)
+    0x0001c240   0x0000000a   Code   RO         7023    .ARM.Collect$$libinit$$00000016  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7024    .ARM.Collect$$libinit$$00000017  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7026    .ARM.Collect$$libinit$$00000019  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7028    .ARM.Collect$$libinit$$0000001B  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7030    .ARM.Collect$$libinit$$0000001D  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7032    .ARM.Collect$$libinit$$0000001F  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7034    .ARM.Collect$$libinit$$00000021  c_w.l(libinit2.o)
+    0x0001c24a   0x00000000   Code   RO         7036    .ARM.Collect$$libinit$$00000023  c_w.l(libinit2.o)
+    0x0001c24a   0x00000004   Code   RO         7037    .ARM.Collect$$libinit$$00000024  c_w.l(libinit2.o)
+    0x0001c24e   0x00000000   Code   RO         7038    .ARM.Collect$$libinit$$00000025  c_w.l(libinit2.o)
+    0x0001c24e   0x00000000   Code   RO         7042    .ARM.Collect$$libinit$$0000002C  c_w.l(libinit2.o)
+    0x0001c24e   0x00000000   Code   RO         7044    .ARM.Collect$$libinit$$0000002E  c_w.l(libinit2.o)
+    0x0001c24e   0x00000000   Code   RO         7046    .ARM.Collect$$libinit$$00000030  c_w.l(libinit2.o)
+    0x0001c24e   0x00000004   Code   RO         7047    .ARM.Collect$$libinit$$00000031  c_w.l(libinit2.o)
+    0x0001c252   0x00000000   Code   RO         7048    .ARM.Collect$$libinit$$00000032  c_w.l(libinit2.o)
+    0x0001c252   0x00000002   Code   RO         7049    .ARM.Collect$$libinit$$00000033  c_w.l(libinit2.o)
+    0x0001c254   0x00000000   Code   RO         7211    .ARM.Collect$$libshutdown$$00000004  c_w.l(libshutdown2.o)
+    0x0001c254   0x00000024   Code   RO         4260    .emb_text           RTX_Conf_CM.o
+    0x0001c278   0x00000198   Code   RO         4312    .emb_text           HAL_CM4.o
+    0x0001c410   0x00000000   Code   RO         7097    .emb_text           c_w.l(maybetermalloc1.o)
+    0x0001c410   0x0000002c   Code   RO         4681    .text               startup_nrf52832.o
+    0x0001c43c   0x00000008   Code   RO         6488    .text               c_w.l(libspace.o)
+    0x0001c444   0x00000010   Code   RO         6491    .text               c_w.l(rt_ctype_table.o)
+    0x0001c454   0x00000004   Code   RO         6498    .text               c_w.l(rt_errno_addr_twolibspace.o)
+    0x0001c458   0x0000009e   Code   RO         6508    .text               c_w.l(h1_alloc_mt.o)
+    0x0001c4f6   0x00000076   Code   RO         6510    .text               c_w.l(h1_free_mt.o)
+    0x0001c56c   0x000000ee   Code   RO         6562    .text               c_w.l(lludivv7m.o)
+    0x0001c65a   0x00000002   PAD
+    0x0001c65c   0x00000024   Code   RO         6566    .text               c_w.l(vsprintf.o)
+    0x0001c680   0x0000004e   Code   RO         6588    .text               c_w.l(_printf_pad.o)
+    0x0001c6ce   0x00000052   Code   RO         6590    .text               c_w.l(_printf_str.o)
+    0x0001c720   0x00000078   Code   RO         6592    .text               c_w.l(_printf_dec.o)
+    0x0001c798   0x00000094   Code   RO         6612    .text               c_w.l(_printf_hex_int_ll_ptr.o)
+    0x0001c82c   0x00000188   Code   RO         6632    .text               c_w.l(__printf_flags_ss_wp.o)
+    0x0001c9b4   0x0000003c   Code   RO         6644    .text               c_w.l(__0sscanf.o)
+    0x0001c9f0   0x0000014c   Code   RO         6646    .text               c_w.l(_scanf_int.o)
+    0x0001cb3c   0x0000004c   Code   RO         6672    .text               c_w.l(fclose.o)
+    0x0001cb88   0x00000090   Code   RO         6680    .text               c_w.l(fflush_locked.o)
+    0x0001cc18   0x00000144   Code   RO         6682    .text               c_w.l(fopen_locked.o)
+    0x0001cd5c   0x00000080   Code   RO         6684    .text               c_w.l(assert.o)
+    0x0001cddc   0x00000058   Code   RO         6688    .text               c_w.l(memcmp.o)
+    0x0001ce34   0x0000003e   Code   RO         6690    .text               c_w.l(strlen.o)
+    0x0001ce72   0x00000096   Code   RO         6692    .text               c_w.l(strncmp.o)
+    0x0001cf08   0x0000008a   Code   RO         6694    .text               c_w.l(rt_memcpy_v6.o)
+    0x0001cf92   0x00000084   Code   RO         6696    .text               c_w.l(rt_memmove_v6.o)
+    0x0001d016   0x00000064   Code   RO         6698    .text               c_w.l(rt_memcpy_w.o)
+    0x0001d07a   0x00000010   Code   RO         6700    .text               c_w.l(aeabi_memset.o)
+    0x0001d08a   0x00000044   Code   RO         6702    .text               c_w.l(rt_memclr.o)
+    0x0001d0ce   0x0000004e   Code   RO         6704    .text               c_w.l(rt_memclr_w.o)
+    0x0001d11c   0x00000080   Code   RO         6708    .text               c_w.l(strcmpv7m.o)
+    0x0001d19c   0x00000006   Code   RO         6713    .text               c_w.l(heapauxi.o)
+    0x0001d1a2   0x00000002   PAD
+    0x0001d1a4   0x00000024   Code   RO         6721    .text               c_w.l(init_aeabi.o)
+    0x0001d1c8   0x0000000a   Code   RO         6874    .text               c_w.l(rt_heap_descriptor_twolibspace.o)
+    0x0001d1d2   0x0000000a   Code   RO         6881    .text               c_w.l(rt_locale_twolibspace.o)
+    0x0001d1dc   0x00000004   Code   RO         6883    .text               c_w.l(hguard.o)
+    0x0001d1e0   0x0000008a   Code   RO         6885    .text               c_w.l(init_alloc.o)
+    0x0001d26a   0x00000012   Code   RO         6891    .text               c_w.l(h1_init_mt.o)
+    0x0001d27c   0x00000024   Code   RO         6903    .text               c_w.l(_printf_truncate.o)
+    0x0001d2a0   0x000000b2   Code   RO         6905    .text               c_w.l(_printf_intcommon.o)
+    0x0001d352   0x00000028   Code   RO         6907    .text               c_w.l(_printf_charcount.o)
+    0x0001d37a   0x0000041a   Code   RO         6909    .text               c_w.l(_printf_fp_dec.o)
+    0x0001d794   0x00000030   Code   RO         6911    .text               c_w.l(_printf_char_common.o)
+    0x0001d7c4   0x0000000a   Code   RO         6913    .text               c_w.l(_sputc.o)
+    0x0001d7ce   0x0000002c   Code   RO         6917    .text               c_w.l(_printf_char.o)
+    0x0001d7fa   0x00000002   PAD
+    0x0001d7fc   0x000000bc   Code   RO         6921    .text               c_w.l(_printf_wctomb.o)
+    0x0001d8b8   0x0000007c   Code   RO         6924    .text               c_w.l(_printf_longlong_dec.o)
+    0x0001d934   0x00000070   Code   RO         6930    .text               c_w.l(_printf_oct_int_ll.o)
+    0x0001d9a4   0x0000001c   Code   RO         6949    .text               c_w.l(_chval.o)
+    0x0001d9c0   0x0000002c   Code   RO         6955    .text               c_w.l(scanf_char.o)
+    0x0001d9ec   0x00000040   Code   RO         6957    .text               c_w.l(_sgetc.o)
+    0x0001da2c   0x000001d6   Code   RO         6971    .text               c_w.l(flsbuf.o)
+    0x0001dc02   0x00000002   PAD
+    0x0001dc04   0x000000f8   Code   RO         6973    .text               c_w.l(fseek.o)
+    0x0001dcfc   0x000000f0   Code   RO         6977    .text               c_w.l(stdio.o)
+    0x0001ddec   0x00000068   Code   RO         6984    .text               c_w.l(setvbuf_locked.o)
+    0x0001de54   0x000001c8   Code   RO         6986    .text               c_w.l(initio_locked.o)
+    0x0001e01c   0x00000016   Code   RO         6991    .text               c_w.l(abort.o)
+    0x0001e032   0x0000000e   Code   RO         6993    .text               c_w.l(defsig_pvfn_outer.o)
+    0x0001e040   0x0000007a   Code   RO         6999    .text               c_w.l(rt_memmove_w.o)
+    0x0001e0ba   0x0000000e   Code   RO         7087    .text               c_w.l(sys_wrch.o)
+    0x0001e0c8   0x0000000c   Code   RO         7089    .text               c_w.l(sys_exit.o)
+    0x0001e0d4   0x0000003e   Code   RO         7101    .text               c_w.l(h1_extend_mt.o)
+    0x0001e112   0x0000008a   Code   RO         7103    .text               c_w.l(lludiv10.o)
+    0x0001e19c   0x00000012   Code   RO         7105    .text               c_w.l(isspace.o)
+    0x0001e1ae   0x00000002   PAD
+    0x0001e1b0   0x000002fc   Code   RO         7107    .text               c_w.l(_printf_fp_hex.o)
+    0x0001e4ac   0x00000080   Code   RO         7110    .text               c_w.l(_printf_fp_infnan.o)
+    0x0001e52c   0x0000002c   Code   RO         7116    .text               c_w.l(_printf_wchar.o)
+    0x0001e558   0x00000374   Code   RO         7118    .text               c_w.l(_scanf.o)
+    0x0001e8cc   0x000000dc   Code   RO         7126    .text               c_w.l(bigflt0.o)
+    0x0001e9a8   0x00000042   Code   RO         7153    .text               c_w.l(ftell.o)
+    0x0001e9ea   0x00000036   Code   RO         7165    .text               c_w.l(fputs_locked.o)
+    0x0001ea20   0x00000040   Code   RO         7179    .text               c_w.l(_wcrtomb.o)
+    0x0001ea60   0x0000000a   Code   RO         7184    .text               c_w.l(defsig_exit.o)
+    0x0001ea6a   0x0000000e   Code   RO         7186    .text               c_w.l(defsig_abrt_outer.o)
+    0x0001ea78   0x0000000e   Code   RO         7190    .text               c_w.l(defsig_rtred_outer.o)
+    0x0001ea86   0x0000000e   Code   RO         7194    .text               c_w.l(defsig_rtmem_outer.o)
+    0x0001ea94   0x00000030   Code   RO         7198    .text               c_w.l(defsig_pvfn_inner.o)
+    0x0001eac4   0x00000018   Code   RO         7200    .text               c_w.l(assert_stdio.o)
+    0x0001eadc   0x00000002   Code   RO         7246    .text               c_w.l(use_no_semi.o)
+    0x0001eade   0x00000000   Code   RO         7248    .text               c_w.l(indicate_semi.o)
+    0x0001eade   0x00000032   Code   RO         7262    .text               c_w.l(defsig_general.o)
+    0x0001eb10   0x00000030   Code   RO         7264    .text               c_w.l(defsig_abrt_inner.o)
+    0x0001eb40   0x00000034   Code   RO         7270    .text               c_w.l(defsig_rtred_inner.o)
+    0x0001eb74   0x00000050   Code   RO         7272    .text               c_w.l(defsig_rtmem_inner.o)
+    0x0001ebc4   0x0000003e   Code   RO         7129    CL$$btod_d2e        c_w.l(btod.o)
+    0x0001ec02   0x00000046   Code   RO         7131    CL$$btod_d2e_denorm_low  c_w.l(btod.o)
+    0x0001ec48   0x00000060   Code   RO         7130    CL$$btod_d2e_norm_op1  c_w.l(btod.o)
+    0x0001eca8   0x00000338   Code   RO         7139    CL$$btod_div_common  c_w.l(btod.o)
+    0x0001efe0   0x000000c6   Code   RO         7136    CL$$btod_e2e        c_w.l(btod.o)
+    0x0001f0a6   0x00000028   Code   RO         7133    CL$$btod_ediv       c_w.l(btod.o)
+    0x0001f0ce   0x00000028   Code   RO         7132    CL$$btod_emul       c_w.l(btod.o)
+    0x0001f0f6   0x00000244   Code   RO         7138    CL$$btod_mult_common  c_w.l(btod.o)
+    0x0001f33a   0x00000002   PAD
+    0x0001f33c   0x00000004   Code   RO         4314    SVC_TABLE           SVC_Table.o
+    0x0001f340   0x0000000e   Code   RO         3904    i.$Sub$$main        mbed_retarget.o
+    0x0001f34e   0x00000002   PAD
+    0x0001f350   0x00000044   Code   RO         1853    i.<Func5>           nRF5xn.o
+    0x0001f394   0x00000180   Code   RO         5710    i.GPIOTE_IRQHandler  nrf_drv_gpiote.o
+    0x0001f514   0x00000044   Code   RO         6386    i.RTC1_IRQHandler   us_ticker.o
+    0x0001f558   0x00000084   Code   RO         6234    i.SWI2_EGU2_IRQHandler  softdevice_handler.o
+    0x0001f5dc   0x000002e4   Code   RO         4700    i.SystemInit        system_nrf52.o
+    0x0001f8c0   0x00000160   Code   RO         6274    i.UARTE0_UART0_IRQHandler  serial_api.o
+    0x0001fa20   0x00000020   Code   RO         1352    i._Z11signalEventv  btle.o
+    0x0001fa40   0x00000234   Code   RO         1353    i._Z12btle_handlerP9ble_evt_t  btle.o
+    0x0001fc74   0x0000009c   Code   RO         6413    i._Z13blinkCallbackv  main.o
+    0x0001fd10   0x00000074   Code   RO         1403    i._Z13btle_gap_initv  btle_gap.o
+    0x0001fd84   0x000002c8   Code   RO         6415    i._Z15bleInitCompletePN3BLE37InitializationCompleteCallbackContextE  main.o
+    0x0002004c   0x00000004   Code   RO         1354    i._Z16sys_evt_dispatchj  btle.o
+    0x00020050   0x00000040   Code   RO         1854    i._Z17createBLEInstancev  nRF5xn.o
+    0x00020090   0x00000024   Code   RO         1138    i._Z18equeue_tick_updatev  equeue_mbed.o
+    0x000200b4   0x000003bc   Code   RO         1392    i._Z20bleGattcEventHandlerPK9ble_evt_t  btle_discovery.o
+    0x00020470   0x00000028   Code   RO         6416    i._Z21disconnectionCallbackPKN3Gap29DisconnectionCallbackParams_tE  main.o
+    0x00020498   0x00000058   Code   RO         6417    i._Z21onDataWrittenCallbackPK23GattWriteCallbackParams  main.o
+    0x000204f0   0x00000004   Code   RO         1416    i._Z23btle_matchAddressAndIrkPK14ble_gap_addr_tPK13ble_gap_irk_t  btle_security_pm.o
+    0x000204f4   0x0000000c   Code   RO         1418    i._Z27btle_hasInitializedSecurityv  btle_security_pm.o
+    0x00020500   0x00000070   Code   RO         6418    i._Z27scheduleBleEventsProcessingPN3BLE32OnEventsToProcessCallbackContextE  main.o
+    0x00020570   0x0000002c   Code   RO         1420    i._Z33btle_createWhitelistFromBondTableP19ble_gap_whitelist_t  btle_security_pm.o
+    0x0002059c   0x00000088   Code   RO         1810    i._ZN10GattServer11handleEventEN16GattServerEvents11gattEvent_eEt  nRF5xGattServer.o
+    0x00020624   0x00000016   Code   RO         4048    i._ZN11ManagedFile5closeEv  mbed_retarget.o
+    0x0002063a   0x0000000e   Code   RO         4055    i._ZN11ManagedFileD0Ev  mbed_retarget.o
+    0x00020648   0x00000010   Code   RO         1253    i._ZN15BLEInstanceBase21signalEventsToProcessEj  BLEInstanceBase.o
+    0x00020658   0x00000002   Code   RO         1255    i._ZN15BLEInstanceBaseD2Ev  BLEInstanceBase.o
+    0x0002065a   0x0000021c   Code   RO         1754    i._ZN15nRF5xGattServer10addServiceER11GattService  nRF5xGattServer.o
+    0x00020876   0x00000002   PAD
+    0x00020878   0x000005b0   Code   RO         1755    i._ZN15nRF5xGattServer10hwCallbackEP9ble_evt_t  nRF5xGattServer.o
+    0x00020e28   0x00000044   Code   RO         1760    i._ZN15nRF5xGattServer23releaseLongWriteRequestEt  nRF5xGattServer.o
+    0x00020e6c   0x000000e0   Code   RO         1921    i._ZN15nRF5xGattServerC1Ev  nRF5xn.o
+    0x00020f4c   0x0000001c   Code   RO         1924    i._ZN17DiscoveredServiceC1Ev  nRF5xn.o
+    0x00020f68   0x0000005e   Code   RO         1307    i._ZN17GapScanningParamsC1Etttb  GapScanningParams.o
+    0x00020fc6   0x00000002   PAD
+    0x00020fc8   0x000001dc   Code   RO         6446    i._ZN18GapAdvertisingData7addDataENS_10DataType_tEPKhh  main.o
+    0x000211a4   0x0000009c   Code   RO         1817    i._ZN21nRF5xServiceDiscovery22CharUUIDDiscoveryQueue12triggerFirstEv  nRF5xServiceDiscovery.o
+    0x00021240   0x000000ee   Code   RO         1818    i._ZN21nRF5xServiceDiscovery23setupDiscoveredServicesEPK34ble_gattc_evt_prim_srvc_disc_rsp_t  nRF5xServiceDiscovery.o
+    0x0002132e   0x00000002   PAD
+    0x00021330   0x000002cc   Code   RO         1819    i._ZN21nRF5xServiceDiscovery24progressServiceDiscoveryEv  nRF5xServiceDiscovery.o
+    0x000215fc   0x00000088   Code   RO         1820    i._ZN21nRF5xServiceDiscovery25ServiceUUIDDiscoveryQueue12triggerFirstEv  nRF5xServiceDiscovery.o
+    0x00021684   0x00000190   Code   RO         1821    i._ZN21nRF5xServiceDiscovery27processDiscoverUUIDResponseEPK41ble_gattc_evt_char_val_by_uuid_read_rsp_t  nRF5xServiceDiscovery.o
+    0x00021814   0x000000c6   Code   RO         1823    i._ZN21nRF5xServiceDiscovery30setupDiscoveredCharacteristicsEPK29ble_gattc_evt_char_disc_rsp_t  nRF5xServiceDiscovery.o
+    0x000218da   0x00000002   PAD
+    0x000218dc   0x0000030c   Code   RO         1824    i._ZN21nRF5xServiceDiscovery31progressCharacteristicDiscoveryEv  nRF5xServiceDiscovery.o
+    0x00021be8   0x000001f4   Code   RO         1843    i._ZN21nRF5xServiceDiscovery32terminateCharacteristicDiscoveryE11ble_error_t  nRF5xServiceDiscovery.o
+    0x00021ddc   0x000000a0   Code   RO         2192    i._ZN21nRF5xServiceDiscovery9terminateEv  nRF5xn.o
+    0x00021e7c   0x00000040   Code   RO         1537    i._ZN29nRF5xDiscoveredCharacteristic5setupEP15nRF5xGattClientt21ble_gatt_char_props_ttt  nRF5xDiscoveredCharacteristic.o
+    0x00021ebc   0x00000080   Code   RO         1538    i._ZN29nRF5xDiscoveredCharacteristic5setupEP15nRF5xGattClienttt21ble_gatt_char_props_ttt  nRF5xDiscoveredCharacteristic.o
+    0x00021f3c   0x00000084   Code   RO         1468    i._ZN39nRF5xCharacteristicDescriptorDiscoverer20findRunningDiscoveryEt  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00021fc0   0x00000156   Code   RO         1472    i._ZN39nRF5xCharacteristicDescriptorDiscoverer27processAttributeInformationEtRK34ble_gattc_evt_attr_info_disc_rsp_t  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00022116   0x0000013c   Code   RO         1474    i._ZN39nRF5xCharacteristicDescriptorDiscoverer7processEtRK29ble_gattc_evt_desc_disc_rsp_t  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00022252   0x00000002   PAD
+    0x00022254   0x00000048   Code   RO         1478    i._ZN39nRF5xCharacteristicDescriptorDiscoverer9DiscoveryC1Ev  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x0002229c   0x000000cc   Code   RO         1479    i._ZN39nRF5xCharacteristicDescriptorDiscoverer9terminateEPNS_9DiscoveryE11ble_error_t  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00022368   0x0000001c   Code   RO         1480    i._ZN39nRF5xCharacteristicDescriptorDiscoverer9terminateEt11ble_error_t  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00022384   0x00000010   Code   RO         1481    i._ZN39nRF5xCharacteristicDescriptorDiscovererC1Ev  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x00022394   0x00000040   Code   RO         1175    i._ZN3BLE10gattServerEv  BLE.o
+    0x000223d4   0x00000040   Code   RO         1178    i._ZN3BLE13processEventsEv  BLE.o
+    0x00022414   0x0000001a   Code   RO         1180    i._ZN3BLE17onEventsToProcessERK26FunctionPointerWithContextIPNS_32OnEventsToProcessCallbackContextEE  BLE.o
+    0x0002242e   0x0000002e   Code   RO         1181    i._ZN3BLE18initImplementationE26FunctionPointerWithContextIPNS_37InitializationCompleteCallbackContextEE  BLE.o
+    0x0002245c   0x00000030   Code   RO         1182    i._ZN3BLE21signalEventsToProcessEv  BLE.o
+    0x0002248c   0x00000040   Code   RO         1183    i._ZN3BLE3gapEv     BLE.o
+    0x000224cc   0x000000a4   Code   RO         1184    i._ZN3BLE8InstanceEj  BLE.o
+    0x00022570   0x00000004   Code   RO         2050    i._ZN3Gap15stopAdvertisingEv  nRF5xn.o
+    0x00022574   0x00000006   Code   RO         1031    i._ZN4mbed10TimerEvent3irqEj  TimerEvent.o
+    0x0002257a   0x00000010   Code   RO         1032    i._ZN4mbed10TimerEvent6insertEj  TimerEvent.o
+    0x0002258a   0x0000000a   Code   RO         1033    i._ZN4mbed10TimerEvent6removeEv  TimerEvent.o
+    0x00022594   0x00000028   Code   RO         1035    i._ZN4mbed10TimerEventC2Ev  TimerEvent.o
+    0x000225bc   0x00000018   Code   RO         1037    i._ZN4mbed10TimerEventD2Ev  TimerEvent.o
+    0x000225d4   0x000000b0   Code   RO         3905    i._ZN4mbed17remove_filehandleEPNS_8FileLikeE  mbed_retarget.o
+    0x00022684   0x00000028   Code   RO         2276    i._ZN4mbed4File4openEPNS_10FileSystemEPKci  File.o
+    0x000226ac   0x00000058   Code   RO         2278    i._ZN4mbed4File4seekEli  File.o
+    0x00022704   0x0000004c   Code   RO         2279    i._ZN4mbed4File4sizeEv  File.o
+    0x00022750   0x0000001e   Code   RO         2282    i._ZN4mbed4File5closeEv  File.o
+    0x0002276e   0x00000002   PAD
+    0x00022770   0x00000058   Code   RO         2283    i._ZN4mbed4File5writeEPKvj  File.o
+    0x000227c8   0x0000004c   Code   RO         2284    i._ZN4mbed4File6isattyEv  File.o
+    0x00022814   0x0000001c   Code   RO         2287    i._ZN4mbed4FileC1Ev  File.o
+    0x00022830   0x0000002c   Code   RO         2288    i._ZN4mbed4FileD0Ev  File.o
+    0x0002285c   0x00000028   Code   RO         2289    i._ZN4mbed4FileD1Ev  File.o
+    0x00022884   0x0000001c   Code   RO          997    i._ZN4mbed5Timer5resetEv  Timer.o
+    0x000228a0   0x00000020   Code   RO          998    i._ZN4mbed5Timer5startEv  Timer.o
+    0x000228c0   0x00000032   Code   RO          999    i._ZN4mbed5Timer7read_msEv  Timer.o
+    0x000228f2   0x00000028   Code   RO         1003    i._ZN4mbed5TimerC1Ev  Timer.o
+    0x0002291a   0x0000002a   Code   RO          951    i._ZN4mbed6Ticker5setupEj  Ticker.o
+    0x00022944   0x0000004e   Code   RO          952    i._ZN4mbed6Ticker6detachEv  Ticker.o
+    0x00022992   0x00000002   PAD
+    0x00022994   0x00000038   Code   RO          953    i._ZN4mbed6Ticker7handlerEv  Ticker.o
+    0x000229cc   0x0000002c   Code   RO          976    i._ZN4mbed7Timeout7handlerEv  Timeout.o
+    0x000229f8   0x00000004   Code   RO          222    i._ZN4mbed8FileBase11getPathTypeEv  FileBase.o
+    0x000229fc   0x0000009c   Code   RO          224    i._ZN4mbed8FileBase6lookupEPKcj  FileBase.o
+    0x00022a98   0x00000048   Code   RO          226    i._ZN4mbed8FileBaseC1EPKcNS_8PathTypeE  FileBase.o
+    0x00022ae0   0x00000060   Code   RO          228    i._ZN4mbed8FileBaseD1Ev  FileBase.o
+    0x00022b40   0x00000018   Code   RO          260    i._ZN4mbed8FilePath10fileSystemEv  FilePath.o
+    0x00022b58   0x00000018   Code   RO          262    i._ZN4mbed8FilePath4fileEv  FilePath.o
+    0x00022b70   0x0000000a   Code   RO          263    i._ZN4mbed8FilePath6existsEv  FilePath.o
+    0x00022b7a   0x00000018   Code   RO          264    i._ZN4mbed8FilePath6isFileEv  FilePath.o
+    0x00022b92   0x00000004   Code   RO          265    i._ZN4mbed8FilePath8fileNameEv  FilePath.o
+    0x00022b96   0x00000040   Code   RO          266    i._ZN4mbed8FilePathC1EPKc  FilePath.o
+    0x00022bd6   0x00000006   Code   RO         4113    i._ZN4rtos5Mutex4lockEj  Mutex.o
+    0x00022bdc   0x00000006   Code   RO         4114    i._ZN4rtos5Mutex6unlockEv  Mutex.o
+    0x00022be2   0x00000002   PAD
+    0x00022be4   0x00000054   Code   RO         4116    i._ZN4rtos5MutexC1Ev  Mutex.o
+    0x00022c38   0x00000004   Code   RO         4174    i._ZN4rtos6Thread4waitEj  Thread.o
+    0x00022c3c   0x00000006   Code   RO         4146    i._ZN4rtos9Semaphore4waitEj  Semaphore.o
+    0x00022c42   0x00000006   Code   RO         4147    i._ZN4rtos9Semaphore7releaseEv  Semaphore.o
+    0x00022c48   0x0000001c   Code   RO         4148    i._ZN4rtos9SemaphoreC1Ei  Semaphore.o
+    0x00022c64   0x0000000e   Code   RO         4149    i._ZN4rtos9SemaphoreD1Ev  Semaphore.o
+    0x00022c72   0x00000004   Code   RO         1068    i._ZN6events10EventQueue8dispatchEi  EventQueue.o
+    0x00022c76   0x00000018   Code   RO         1069    i._ZN6events10EventQueueC1EjPh  EventQueue.o
+    0x00022c8e   0x0000001a   Code   RO         1070    i._ZN6events10EventQueueD1Ev  EventQueue.o
+    0x00022ca8   0x00000168   Code   RO         1906    i._ZN6nRF5xn13getGattClientEv  nRF5xn.o
+    0x00022e10   0x00000028   Code   RO         1903    i._ZN6nRF5xn13getGattServerEv  nRF5xn.o
+    0x00022e38   0x00000018   Code   RO         1857    i._ZN6nRF5xn13processEventsEv  nRF5xn.o
+    0x00022e50   0x00000040   Code   RO         1909    i._ZN6nRF5xn18getSecurityManagerEv  nRF5xn.o
+    0x00022e90   0x00000060   Code   RO         1858    i._ZN6nRF5xn4initEj26FunctionPointerWithContextIPN3BLE37InitializationCompleteCallbackContextEE  nRF5xn.o
+    0x00022ef0   0x00000004   Code   RO         1900    i._ZN6nRF5xn6getGapEv  nRF5xn.o
+    0x00022ef4   0x00000040   Code   RO         1859    i._ZN6nRF5xn8InstanceEj  nRF5xn.o
+    0x00022f34   0x0000011c   Code   RO         1861    i._ZN6nRF5xnC1Ev    nRF5xn.o
+    0x00023050   0x000000c4   Code   RO         1863    i._ZN6nRF5xnD1Ev    nRF5xn.o
+    0x00023114   0x0000001e   Code   RO         1558    i._ZN8nRF5xGap15stopAdvertisingEv  nRF5xGap.o
+    0x00023132   0x000000a6   Code   RO         1559    i._ZN8nRF5xGap16startAdvertisingERK20GapAdvertisingParams  nRF5xGap.o
+    0x000231d8   0x0000002c   Code   RO         1560    i._ZN8nRF5xGap18setAdvertisingDataERK18GapAdvertisingDataS2_  nRF5xGap.o
+    0x00023204   0x00000006   Code   RO         1562    i._ZN8nRF5xGap19setConnectionHandleEt  nRF5xGap.o
+    0x0002320a   0x000000f0   Code   RO         1564    i._ZN8nRF5xGap22generateStackWhitelistER19ble_gap_whitelist_t  nRF5xGap.o
+    0x000232fa   0x0000000c   Code   RO         2189    i._ZNK21nRF5xServiceDiscovery8isActiveEv  nRF5xn.o
+    0x00023306   0x00000004   Code   RO         2041    i._ZNK3Gap25getMinAdvertisingIntervalEv  nRF5xn.o
+    0x0002330a   0x00000034   Code   RO         1846    i._ZNK4UUIDeqERKS_  nRF5xServiceDiscovery.o
+    0x0002333e   0x00000004   Code   RO         1661    i._ZNK8nRF5xGap25getMinAdvertisingIntervalEv  nRF5xGap.o
+    0x00023342   0x00000002   Code   RO         1250    i._ZNK9SafeBool_4base7trueTagEv  BLE.o
+    0x00023344   0x0000000a   Code   RO         3910    i._ZdlPv            mbed_retarget.o
+    0x0002334e   0x000000bc   Code   RO         1528    i._ZeqRK24DiscoveredCharacteristicS1_  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x0002340a   0x00000002   PAD
+    0x0002340c   0x00000034   Code   RO         3912    i._Znwj             mbed_retarget.o
+    0x00023440   0x00000008   Code   RO         1377    i.__ARM_common_memclr4_6  btle.o
+    0x00023448   0x00000030   Code   RO         7244    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x00023478   0x00000010   Code   RO         4690    i.__NVIC_SetVector  cmsis_nvic.o
+    0x00023488   0x00000004   Code   RO         3913    i.__aeabi_atexit    mbed_retarget.o
+    0x0002348c   0x00000024   Code   RO         6839    i.__aeabi_vec_ctor_nocookie_nodtor  cpprt_w.l(aeabi_vec_ctor_nocookie_nodtor.o)
+    0x000234b0   0x00000010   Code   RO         6727    i.__cxa_guard_acquire  cpprt_w.l(cxa_guard_acquire.o)
+    0x000234c0   0x00000006   Code   RO         6724    i.__cxa_pure_virtual  cpprt_w.l(pure_virt.o)
+    0x000234c6   0x00000002   PAD
+    0x000234c8   0x00000048   Code   RO         6419    i.__sti___8_main_cpp_65dbaf9c  main.o
+    0x00023510   0x0000002c   Code   RO         4261    i.__user_perthread_libspace  RTX_Conf_CM.o
+    0x0002353c   0x00000010   Code   RO         4683    i.__user_setup_stackheap  sys.o
+    0x0002354c   0x00000048   Code   RO         4566    i._init_box         rt_MemBox.o
+    0x00023594   0x0000000e   Code   RO         6625    i._is_digit         c_w.l(__printf_wp.o)
+    0x000235a2   0x00000002   PAD
+    0x000235a4   0x00000020   Code   RO         4262    i._mutex_acquire    RTX_Conf_CM.o
+    0x000235c4   0x0000004c   Code   RO         4263    i._mutex_initialize  RTX_Conf_CM.o
+    0x00023610   0x0000001c   Code   RO         4264    i._mutex_release    RTX_Conf_CM.o
+    0x0002362c   0x00000008   Code   RO         3916    i._platform_post_stackheap_init  mbed_retarget.o
+    0x00023634   0x0000004c   Code   RO         3917    i._sys_close        mbed_retarget.o
+    0x00023680   0x00000038   Code   RO         3920    i._sys_flen         mbed_retarget.o
+    0x000236b8   0x00000048   Code   RO         3921    i._sys_istty        mbed_retarget.o
+    0x00023700   0x000002ac   Code   RO         3922    i._sys_open         mbed_retarget.o
+    0x000239ac   0x0000003c   Code   RO         3924    i._sys_seek         mbed_retarget.o
+    0x000239e8   0x00000084   Code   RO         3925    i._sys_write        mbed_retarget.o
+    0x00023a6c   0x00000024   Code   RO         6175    i.app_error_fault_handler  app_error_weak.o
+    0x00023a90   0x0000001a   Code   RO         6164    i.app_error_handler_bare  app_error.o
+    0x00023aaa   0x00000002   PAD
+    0x00023aac   0x0000005c   Code   RO         6183    i.app_util_critical_region_enter  app_util_platform.o
+    0x00023b08   0x00000038   Code   RO         6184    i.app_util_critical_region_exit  app_util_platform.o
+    0x00023b40   0x00000010   Code   RO         5080    i.ble_conn_state_conn_handles  ble_conn_state.o
+    0x00023b50   0x00000010   Code   RO         5081    i.ble_conn_state_encrypted  ble_conn_state.o
+    0x00023b60   0x00000010   Code   RO         5083    i.ble_conn_state_mitm_protected  ble_conn_state.o
+    0x00023b70   0x00000118   Code   RO         5087    i.ble_conn_state_on_ble_evt  ble_conn_state.o
+    0x00023c88   0x00000030   Code   RO         5089    i.ble_conn_state_role  ble_conn_state.o
+    0x00023cb8   0x00000030   Code   RO         5090    i.ble_conn_state_status  ble_conn_state.o
+    0x00023ce8   0x00000018   Code   RO         5092    i.ble_conn_state_user_flag_collection  ble_conn_state.o
+    0x00023d00   0x00000028   Code   RO         5093    i.ble_conn_state_user_flag_get  ble_conn_state.o
+    0x00023d28   0x0000002c   Code   RO         5094    i.ble_conn_state_user_flag_set  ble_conn_state.o
+    0x00023d54   0x000000a8   Code   RO         1357    i.btle_init         btle.o
+    0x00023dfc   0x00000034   Code   RO         6388    i.common_rtc_64bit_us_get  us_ticker.o
+    0x00023e30   0x00000074   Code   RO         6389    i.common_rtc_init   us_ticker.o
+    0x00023ea4   0x00000090   Code   RO         6390    i.common_rtc_set_interrupt  us_ticker.o
+    0x00023f34   0x0000000c   Code   RO         3838    i.core_util_are_interrupts_enabled  mbed_critical.o
+    0x00023f40   0x000000d0   Code   RO         4887    i.core_util_critical_section_enter  nordic_critical.o
+    0x00024010   0x000000b4   Code   RO         4888    i.core_util_critical_section_exit  nordic_critical.o
+    0x000240c4   0x000001e2   Code   RO         1446    i.custom_add_in_characteristic  custom_helper.o
+    0x000242a6   0x00000074   Code   RO         1447    i.custom_add_in_descriptor  custom_helper.o
+    0x0002431a   0x00000002   PAD
+    0x0002431c   0x00000118   Code   RO         1449    i.custom_convert_to_nordic_uuid  custom_helper.o
+    0x00024434   0x00000002   Code   RO         4244    i.default_idle_hook  rtos_idle.o
+    0x00024436   0x0000008c   Code   RO         1094    i.equeue_alloc      equeue.o
+    0x000244c2   0x00000080   Code   RO         1104    i.equeue_create     equeue.o
+    0x00024542   0x00000060   Code   RO         1105    i.equeue_create_inplace  equeue.o
+    0x000245a2   0x00000052   Code   RO         1107    i.equeue_destroy    equeue.o
+    0x000245f4   0x0000025e   Code   RO         1108    i.equeue_dispatch   equeue.o
+    0x00024852   0x000000b0   Code   RO         1109    i.equeue_enqueue    equeue.o
+    0x00024902   0x00000006   Code   RO         1110    i.equeue_event_delay  equeue.o
+    0x00024908   0x00000006   Code   RO         1111    i.equeue_event_dtor  equeue.o
+    0x0002490e   0x00000006   Code   RO         1112    i.equeue_event_period  equeue.o
+    0x00024914   0x00000004   Code   RO         1139    i.equeue_mutex_create  equeue_mbed.o
+    0x00024918   0x00000002   Code   RO         1140    i.equeue_mutex_destroy  equeue_mbed.o
+    0x0002491a   0x00000004   Code   RO         1141    i.equeue_mutex_lock  equeue_mbed.o
+    0x0002491e   0x00000004   Code   RO         1142    i.equeue_mutex_unlock  equeue_mbed.o
+    0x00024922   0x0000002e   Code   RO         1113    i.equeue_post       equeue.o
+    0x00024950   0x00000010   Code   RO         1143    i.equeue_sema_create  equeue_mbed.o
+    0x00024960   0x00000004   Code   RO         1144    i.equeue_sema_destroy  equeue_mbed.o
+    0x00024964   0x00000004   Code   RO         1145    i.equeue_sema_signal  equeue_mbed.o
+    0x00024968   0x00000018   Code   RO         1146    i.equeue_sema_wait  equeue_mbed.o
+    0x00024980   0x000000a4   Code   RO         1147    i.equeue_tick       equeue_mbed.o
+    0x00024a24   0x00000012   Code   RO         3875    i.error             mbed_error.o
+    0x00024a36   0x0000000a   Code   RO         3927    i.exit              mbed_retarget.o
+    0x00024a40   0x00000014   Code   RO         6018    i.fds_descriptor_from_rec_id  fds.o
+    0x00024a54   0x00000064   Code   RO         6019    i.fds_file_delete   fds.o
+    0x00024ab8   0x00000044   Code   RO         6022    i.fds_record_close  fds.o
+    0x00024afc   0x0000000e   Code   RO         6024    i.fds_record_find   fds.o
+    0x00024b0a   0x00000012   Code   RO         6025    i.fds_record_find_by_key  fds.o
+    0x00024b1c   0x00000012   Code   RO         6026    i.fds_record_find_in_file  fds.o
+    0x00024b2e   0x00000014   Code   RO         6027    i.fds_record_id_from_desc  fds.o
+    0x00024b42   0x00000002   PAD
+    0x00024b44   0x00000044   Code   RO         6029    i.fds_record_open   fds.o
+    0x00024b88   0x00000010   Code   RO         6030    i.fds_record_update  fds.o
+    0x00024b98   0x00000008   Code   RO         6031    i.fds_record_write  fds.o
+    0x00024ba0   0x0000000e   Code   RO         6032    i.fds_record_write_reserved  fds.o
+    0x00024bae   0x00000002   PAD
+    0x00024bb0   0x00000094   Code   RO         6034    i.fds_reserve       fds.o
+    0x00024c44   0x00000048   Code   RO         6035    i.fds_reserve_cancel  fds.o
+    0x00024c8c   0x0000001a   Code   RO         6657    i.fputc             c_w.l(fputc.o)
+    0x00024ca6   0x00000002   PAD
+    0x00024ca8   0x000000cc   Code   RO         6081    i.fs_erase          fstorage.o
+    0x00024d74   0x00000006   Code   RO         6037    i.fs_event_handler  fds.o
+    0x00024d7a   0x00000002   PAD
+    0x00024d7c   0x000000dc   Code   RO         6084    i.fs_store          fstorage.o
+    0x00024e58   0x000001c4   Code   RO         6085    i.fs_sys_event_handler  fstorage.o
+    0x0002501c   0x000000bc   Code   RO         6038    i.gc_record_find_next  fds.o
+    0x000250d8   0x000001a0   Code   RO         5224    i.gcm_ble_evt_handler  gatt_cache_manager.o
+    0x00025278   0x00000074   Code   RO         5307    i.get_connection_by_conn_handle  id_manager.o
+    0x000252ec   0x00000008   Code   RO         3749    i.get_us_ticker_data  mbed_us_ticker_api.o
+    0x000252f4   0x000000b4   Code   RO         4799    i.gpio_apply_config  gpio_api.o
+    0x000253a8   0x000000b4   Code   RO         4800    i.gpio_dir          gpio_api.o
+    0x0002545c   0x00000098   Code   RO         4801    i.gpio_init         gpio_api.o
+    0x000254f4   0x00000054   Code   RO         3687    i.gpio_init_out     mbed_gpio.o
+    0x00025548   0x000000b0   Code   RO         3688    i.gpio_init_out_ex  mbed_gpio.o
+    0x000255f8   0x000000b4   Code   RO         4807    i.gpio_mode         gpio_api.o
+    0x000256ac   0x000000a4   Code   RO         4808    i.gpio_read         gpio_api.o
+    0x00025750   0x00000060   Code   RO         4809    i.gpiote_irq_handler  gpio_api.o
+    0x000257b0   0x0000002c   Code   RO         5275    i.gscm_db_change_notification_done  gatts_cache_manager.o
+    0x000257dc   0x00000098   Code   RO         5278    i.gscm_local_db_cache_apply  gatts_cache_manager.o
+    0x00025874   0x000000a0   Code   RO         5281    i.gscm_local_db_cache_update  gatts_cache_manager.o
+    0x00025914   0x0000002c   Code   RO         5283    i.gscm_service_changed_ind_send  gatts_cache_manager.o
+    0x00025940   0x0000009a   Code   RO         5309    i.im_address_resolve  id_manager.o
+    0x000259da   0x00000002   PAD
+    0x000259dc   0x00000208   Code   RO         5311    i.im_ble_evt_handler  id_manager.o
+    0x00025be4   0x00000068   Code   RO         5312    i.im_conn_handle_get  id_manager.o
+    0x00025c4c   0x0000003c   Code   RO         5313    i.im_master_id_is_valid  id_manager.o
+    0x00025c88   0x00000054   Code   RO         5314    i.im_master_ids_compare  id_manager.o
+    0x00025cdc   0x00000020   Code   RO         5315    i.im_new_peer_id    id_manager.o
+    0x00025cfc   0x0000004c   Code   RO         5316    i.im_peer_free      id_manager.o
+    0x00025d48   0x00000028   Code   RO         5317    i.im_peer_id_get_by_conn_handle  id_manager.o
+    0x00025d70   0x000000d6   Code   RO         5319    i.im_peer_id_get_by_master_id  id_manager.o
+    0x00025e46   0x00000002   PAD
+    0x00025e48   0x00000128   Code   RO         5321    i.im_whitelist_create  id_manager.o
+    0x00025f70   0x00000070   Code   RO         6235    i.intern_softdevice_events_execute  softdevice_handler.o
+    0x00025fe0   0x00000080   Code   RO         6275    i.internal_set_hwfc  serial_api.o
+    0x00026060   0x0000000e   Code   RO         4552    i.isr_mbx_send      rt_Mailbox.o
+    0x0002606e   0x00000010   Code   RO         4595    i.isr_sem_send      rt_Semaphore.o
+    0x0002607e   0x00000002   PAD
+    0x00026080   0x00000108   Code   RO         5598    i.link_secure       security_manager.o
+    0x00026188   0x00000124   Code   RO         5576    i.link_secure_failure  security_dispatcher.o
+    0x000262ac   0x0000009c   Code   RO         5234    i.local_db_apply_in_evt  gatt_cache_manager.o
+    0x00026348   0x000000b0   Code   RO         5235    i.local_db_update_in_evt  gatt_cache_manager.o
+    0x000263f8   0x00000018   Code   RO         4871    i.lp_ticker_clear_interrupt  lp_ticker.o
+    0x00026410   0x00000010   Code   RO         4872    i.lp_ticker_disable_interrupt  lp_ticker.o
+    0x00026420   0x00000004   Code   RO         4873    i.lp_ticker_init    lp_ticker.o
+    0x00026424   0x0000000c   Code   RO         3701    i.lp_ticker_irq_handler  mbed_lp_ticker_api.o
+    0x00026430   0x00000008   Code   RO         4874    i.lp_ticker_read    lp_ticker.o
+    0x00026438   0x0000000a   Code   RO         4875    i.lp_ticker_set_interrupt  lp_ticker.o
+    0x00026442   0x00000002   PAD
+    0x00026444   0x000000a0   Code   RO         6420    i.main              main.o
+    0x000264e4   0x00000054   Code   RO         3818    i.mbed_assert_internal  mbed_assert.o
+    0x00026538   0x00000184   Code   RO         3826    i.mbed_die          mbed_board.o
+    0x000266bc   0x00000058   Code   RO         3827    i.mbed_error_printf  mbed_board.o
+    0x00026714   0x00000054   Code   RO         3828    i.mbed_error_vfprintf  mbed_board.o
+    0x00026768   0x00000002   Code   RO         3928    i.mbed_main         mbed_retarget.o
+    0x0002676a   0x00000002   Code   RO         3929    i.mbed_sdk_init     mbed_retarget.o
+    0x0002676c   0x00000024   Code   RO         5660    i.nrf_drv_clock_on_soc_event  nrf_drv_clock.o
+    0x00026790   0x00000038   Code   RO         5684    i.nrf_drv_common_irq_enable  nrf_drv_common.o
+    0x000267c8   0x000000c4   Code   RO         5713    i.nrf_drv_gpiote_in_event_enable  nrf_drv_gpiote.o
+    0x0002688c   0x000000e4   Code   RO         5714    i.nrf_drv_gpiote_in_init  nrf_drv_gpiote.o
+    0x00026970   0x00000094   Code   RO         5716    i.nrf_drv_gpiote_in_uninit  nrf_drv_gpiote.o
+    0x00026a04   0x00000060   Code   RO         5717    i.nrf_drv_gpiote_init  nrf_drv_gpiote.o
+    0x00026a64   0x000000e4   Code   RO         5720    i.nrf_drv_gpiote_out_init  nrf_drv_gpiote.o
+    0x00026b48   0x00000050   Code   RO         5728    i.nrf_drv_gpiote_out_uninit  nrf_drv_gpiote.o
+    0x00026b98   0x0000001c   Code   RO         4926    i.nrf_reloc_vector_table  reloc_vector_table.o
+    0x00026bb4   0x000000a0   Code   RO         6039    i.op_enqueue        fds.o
+    0x00026c54   0x00000020   Code   RO         4326    i.osDelay           rt_CMSIS.o
+    0x00026c74   0x0000002c   Code   RO         4327    i.osKernelInitialize  rt_CMSIS.o
+    0x00026ca0   0x000000cc   Code   RO         4329    i.osKernelStart     rt_CMSIS.o
+    0x00026d6c   0x00000054   Code   RO         4340    i.osMutexCreate     rt_CMSIS.o
+    0x00026dc0   0x00000020   Code   RO         4342    i.osMutexRelease    rt_CMSIS.o
+    0x00026de0   0x00000020   Code   RO         4343    i.osMutexWait       rt_CMSIS.o
+    0x00026e00   0x0000005c   Code   RO         4348    i.osSemaphoreCreate  rt_CMSIS.o
+    0x00026e5c   0x00000020   Code   RO         4349    i.osSemaphoreDelete  rt_CMSIS.o
+    0x00026e7c   0x00000050   Code   RO         4350    i.osSemaphoreRelease  rt_CMSIS.o
+    0x00026ecc   0x00000020   Code   RO         4351    i.osSemaphoreWait   rt_CMSIS.o
+    0x00026eec   0x00000094   Code   RO         4356    i.osThreadCreate    rt_CMSIS.o
+    0x00026f80   0x00000044   Code   RO         4357    i.osThreadExit      rt_CMSIS.o
+    0x00026fc4   0x00000048   Code   RO         4369    i.osTimerThread     rt_CMSIS.o
+    0x0002700c   0x00000044   Code   RO         4265    i.os_error          RTX_Conf_CM.o
+    0x00027050   0x00000004   Code   RO         4266    i.os_idle_demon     RTX_Conf_CM.o
+    0x00027054   0x00000028   Code   RO         4608    i.os_tick_init      rt_System.o
+    0x0002707c   0x00000002   Code   RO         4609    i.os_tick_irqack    rt_System.o
+    0x0002707e   0x00000002   PAD
+    0x00027080   0x00000018   Code   RO         5413    i.pdb_next_peer_id_get  peer_database.o
+    0x00027098   0x00000018   Code   RO         5414    i.pdb_peer_allocate  peer_database.o
+    0x000270b0   0x000000f0   Code   RO         5415    i.pdb_peer_free     peer_database.o
+    0x000271a0   0x00000064   Code   RO         5417    i.pdb_raw_store     peer_database.o
+    0x00027204   0x0000001c   Code   RO         5418    i.pdb_read_buf_get  peer_database.o
+    0x00027220   0x00000204   Code   RO         5420    i.pdb_write_buf_get  peer_database.o
+    0x00027424   0x00000098   Code   RO         5421    i.pdb_write_buf_release  peer_database.o
+    0x000274bc   0x00000198   Code   RO         5422    i.pdb_write_buf_store  peer_database.o
+    0x00027654   0x000000d4   Code   RO         5423    i.pdb_write_buf_store_prepare  peer_database.o
+    0x00027728   0x0000002c   Code   RO         5368    i.pds_next_peer_id_get  peer_data_storage.o
+    0x00027754   0x000000b0   Code   RO         5372    i.pds_peer_data_read_ptr_get  peer_data_storage.o
+    0x00027804   0x000000b4   Code   RO         5373    i.pds_peer_data_update  peer_data_storage.o
+    0x000278b8   0x000000a8   Code   RO         5375    i.pds_peer_data_write  peer_data_storage.o
+    0x00027960   0x00000058   Code   RO         5376    i.pds_peer_data_write_prepare  peer_data_storage.o
+    0x000279b8   0x00000030   Code   RO         5377    i.pds_peer_data_write_prepare_cancel  peer_data_storage.o
+    0x000279e8   0x000000a8   Code   RO         5378    i.pds_peer_data_write_prepared  peer_data_storage.o
+    0x00027a90   0x0000002c   Code   RO         5379    i.pds_peer_id_allocate  peer_data_storage.o
+    0x00027abc   0x00000038   Code   RO         5380    i.pds_peer_id_free  peer_data_storage.o
+    0x00027af4   0x00000028   Code   RO         5381    i.pds_peer_id_is_allocated  peer_data_storage.o
+    0x00027b1c   0x000000ac   Code   RO         5383    i.peer_data_clear   peer_data_storage.o
+    0x00027bc8   0x00000020   Code   RO         5357    i.peer_data_parts_get  peer_data.o
+    0x00027be8   0x00000044   Code   RO         5450    i.peer_id_allocate  peer_id.o
+    0x00027c2c   0x0000003c   Code   RO         5451    i.peer_id_delete    peer_id.o
+    0x00027c68   0x00000030   Code   RO         5452    i.peer_id_free      peer_id.o
+    0x00027c98   0x00000038   Code   RO         5453    i.peer_id_get_next_deleted  peer_id.o
+    0x00027cd0   0x00000038   Code   RO         5454    i.peer_id_get_next_used  peer_id.o
+    0x00027d08   0x00000018   Code   RO         5456    i.peer_id_is_allocated  peer_id.o
+    0x00027d20   0x00000060   Code   RO         5384    i.peer_ids_init     peer_data_storage.o
+    0x00027d80   0x0000008c   Code   RO         5549    i.pm_buffer_block_acquire  pm_buffer.o
+    0x00027e0c   0x0000002c   Code   RO         5551    i.pm_buffer_ptr_get  pm_buffer.o
+    0x00027e38   0x00000030   Code   RO         5552    i.pm_buffer_release  pm_buffer.o
+    0x00027e68   0x00000044   Code   RO         5561    i.pm_mutex_lock     pm_mutex.o
+    0x00027eac   0x0000006a   Code   RO         5562    i.pm_mutex_lock_first_available  pm_mutex.o
+    0x00027f16   0x0000001c   Code   RO         5563    i.pm_mutex_lock_status_get  pm_mutex.o
+    0x00027f32   0x0000003a   Code   RO         5564    i.pm_mutex_unlock   pm_mutex.o
+    0x00027f6c   0x00000028   Code   RO         5487    i.pm_on_ble_evt     peer_manager.o
+    0x00027f94   0x00000018   Code   RO         5507    i.pm_whitelist_create  peer_manager.o
+    0x00027fac   0x00000034   Code   RO         4267    i.pre_main          RTX_Conf_CM.o
+    0x00027fe0   0x00000610   Code   RO         6040    i.queue_process     fds.o
+    0x000285f0   0x000000bc   Code   RO         6086    i.queue_process     fstorage.o
+    0x000286ac   0x0000016c   Code   RO         6041    i.record_find       fds.o
+    0x00028818   0x00000120   Code   RO         6042    i.record_find_by_desc  fds.o
+    0x00028938   0x0000001a   Code   RO         4567    i.rt_alloc_box      rt_MemBox.o
+    0x00028952   0x00000002   PAD
+    0x00028954   0x00000050   Code   RO         4633    i.rt_block          rt_Task.o
+    0x000289a4   0x00000048   Code   RO         4590    i.rt_chk_robin      rt_Robin.o
+    0x000289ec   0x000000c8   Code   RO         4530    i.rt_dec_dly        rt_List.o
+    0x00028ab4   0x00000080   Code   RO         4634    i.rt_dispatch       rt_Task.o
+    0x00028b34   0x00000006   Code   RO         4655    i.rt_dly_wait       rt_Time.o
+    0x00028b3a   0x00000002   PAD
+    0x00028b3c   0x00000054   Code   RO         4521    i.rt_evt_psh        rt_Event.o
+    0x00028b90   0x0000002e   Code   RO         4568    i.rt_free_box       rt_MemBox.o
+    0x00028bbe   0x0000002a   Code   RO         4531    i.rt_get_first      rt_List.o
+    0x00028be8   0x00000018   Code   RO         4591    i.rt_init_robin     rt_Robin.o
+    0x00028c00   0x000000ec   Code   RO         4254    i.rt_init_stack     HAL_CM.o
+    0x00028cec   0x00000008   Code   RO         4553    i.rt_mbx_check      rt_Mailbox.o
+    0x00028cf4   0x0000001a   Code   RO         4554    i.rt_mbx_init       rt_Mailbox.o
+    0x00028d0e   0x00000002   PAD
+    0x00028d10   0x00000114   Code   RO         4555    i.rt_mbx_psh        rt_Mailbox.o
+    0x00028e24   0x000000b8   Code   RO         4557    i.rt_mbx_wait       rt_Mailbox.o
+    0x00028edc   0x00000048   Code   RO         4373    i.rt_ms2tick        rt_CMSIS.o
+    0x00028f24   0x00000010   Code   RO         4580    i.rt_mut_init       rt_Mutex.o
+    0x00028f34   0x000000e4   Code   RO         4581    i.rt_mut_release    rt_Mutex.o
+    0x00029018   0x0000006c   Code   RO         4582    i.rt_mut_wait       rt_Mutex.o
+    0x00029084   0x00000080   Code   RO         4612    i.rt_pop_req        rt_System.o
+    0x00029104   0x00000020   Code   RO         4613    i.rt_psh_req        rt_System.o
+    0x00029124   0x0000005c   Code   RO         4533    i.rt_psq_enq        rt_List.o
+    0x00029180   0x00000068   Code   RO         4534    i.rt_put_dly        rt_List.o
+    0x000291e8   0x00000042   Code   RO         4535    i.rt_put_prio       rt_List.o
+    0x0002922a   0x00000002   PAD
+    0x0002922c   0x00000014   Code   RO         4536    i.rt_put_rdy_first  rt_List.o
+    0x00029240   0x0000008c   Code   RO         4537    i.rt_resort_prio    rt_List.o
+    0x000292cc   0x00000012   Code   RO         4255    i.rt_ret_val        HAL_CM.o
+    0x000292de   0x00000014   Code   RO         4256    i.rt_ret_val2       HAL_CM.o
+    0x000292f2   0x0000002c   Code   RO         4538    i.rt_rmv_dly        rt_List.o
+    0x0002931e   0x00000002   PAD
+    0x00029320   0x00000030   Code   RO         4539    i.rt_rmv_list       rt_List.o
+    0x00029350   0x00000060   Code   RO         4596    i.rt_sem_delete     rt_Semaphore.o
+    0x000293b0   0x0000000c   Code   RO         4597    i.rt_sem_init       rt_Semaphore.o
+    0x000293bc   0x00000034   Code   RO         4598    i.rt_sem_psh        rt_Semaphore.o
+    0x000293f0   0x0000002a   Code   RO         4599    i.rt_sem_send       rt_Semaphore.o
+    0x0002941a   0x00000002   PAD
+    0x0002941c   0x00000044   Code   RO         4600    i.rt_sem_wait       rt_Semaphore.o
+    0x00029460   0x00000024   Code   RO         4615    i.rt_stk_check      rt_System.o
+    0x00029484   0x00000024   Code   RO         4635    i.rt_switch_req     rt_Task.o
+    0x000294a8   0x00000128   Code   RO         4636    i.rt_sys_init       rt_Task.o
+    0x000295d0   0x00000080   Code   RO         4637    i.rt_sys_start      rt_Task.o
+    0x00029650   0x00000040   Code   RO         4617    i.rt_systick        rt_System.o
+    0x00029690   0x000000e0   Code   RO         4638    i.rt_tsk_create     rt_Task.o
+    0x00029770   0x0000016c   Code   RO         4639    i.rt_tsk_delete     rt_Task.o
+    0x000298dc   0x0000007c   Code   RO         4641    i.rt_tsk_prio       rt_Task.o
+    0x00029958   0x00000010   Code   RO         4642    i.rt_tsk_self       rt_Task.o
+    0x00029968   0x0000000c   Code   RO         4246    i.rtos_idle_loop    rtos_idle.o
+    0x00029974   0x00000080   Code   RO         6216    i.sdk_mapped_flags_bulk_update_by_key  sdk_mapped_flags.o
+    0x000299f4   0x00000054   Code   RO         6217    i.sdk_mapped_flags_first_key_index_get  sdk_mapped_flags.o
+    0x00029a48   0x00000066   Code   RO         6218    i.sdk_mapped_flags_get_by_key  sdk_mapped_flags.o
+    0x00029aae   0x00000002   PAD
+    0x00029ab0   0x00000062   Code   RO         6219    i.sdk_mapped_flags_key_list_get  sdk_mapped_flags.o
+    0x00029b12   0x00000002   PAD
+    0x00029b14   0x0000007c   Code   RO         6221    i.sdk_mapped_flags_update_by_key  sdk_mapped_flags.o
+    0x00029b90   0x00000058   Code   RO         5578    i.sec_proc_start    security_dispatcher.o
+    0x00029be8   0x00000048   Code   RO         6276    i.serial_baud       serial_api.o
+    0x00029c30   0x00000170   Code   RO         6283    i.serial_init       serial_api.o
+    0x00029da0   0x00000030   Code   RO         6287    i.serial_putc       serial_api.o
+    0x00029dd0   0x000000fc   Code   RO         5236    i.service_changed_pending_flags_check  gatt_cache_manager.o
+    0x00029ecc   0x00000044   Code   RO         4268    i.set_stack_heap    RTX_Conf_CM.o
+    0x00029f10   0x00000084   Code   RO         5600    i.sm_ble_evt_handler  security_manager.o
+    0x00029f94   0x000003a0   Code   RO         5579    i.smd_ble_evt_handler  security_dispatcher.o
+    0x0002a334   0x00000208   Code   RO         5580    i.smd_link_secure   security_dispatcher.o
+    0x0002a53c   0x00000014   Code   RO         6237    i.softdevice_ble_evt_handler_set  softdevice_handler.o
+    0x0002a550   0x00000014   Code   RO         6238    i.softdevice_enable  softdevice_handler.o
+    0x0002a564   0x00000026   Code   RO         6239    i.softdevice_enable_get_default_config  softdevice_handler.o
+    0x0002a58a   0x00000004   Code   RO         6240    i.softdevice_fault_handler  softdevice_handler.o
+    0x0002a58e   0x00000002   PAD
+    0x0002a590   0x0000007c   Code   RO         6241    i.softdevice_handler_init  softdevice_handler.o
+    0x0002a60c   0x00000014   Code   RO         6244    i.softdevice_sys_evt_handler_set  softdevice_handler.o
+    0x0002a620   0x00000014   Code   RO         4375    i.svcDelay          rt_CMSIS.o
+    0x0002a634   0x000000c8   Code   RO         4376    i.svcKernelInitialize  rt_CMSIS.o
+    0x0002a6fc   0x0000000c   Code   RO         4377    i.svcKernelRunning  rt_CMSIS.o
+    0x0002a708   0x0000004c   Code   RO         4378    i.svcKernelStart    rt_CMSIS.o
+    0x0002a754   0x00000044   Code   RO         4382    i.svcMessageGet     rt_CMSIS.o
+    0x0002a798   0x0000001e   Code   RO         4384    i.svcMutexCreate    rt_CMSIS.o
+    0x0002a7b6   0x00000022   Code   RO         4386    i.svcMutexRelease   rt_CMSIS.o
+    0x0002a7d8   0x00000038   Code   RO         4387    i.svcMutexWait      rt_CMSIS.o
+    0x0002a810   0x00000026   Code   RO         4389    i.svcSemaphoreCreate  rt_CMSIS.o
+    0x0002a836   0x0000001c   Code   RO         4390    i.svcSemaphoreDelete  rt_CMSIS.o
+    0x0002a852   0x0000002a   Code   RO         4391    i.svcSemaphoreRelease  rt_CMSIS.o
+    0x0002a87c   0x00000032   Code   RO         4392    i.svcSemaphoreWait  rt_CMSIS.o
+    0x0002a8ae   0x00000002   PAD
+    0x0002a8b0   0x0000007c   Code   RO         4396    i.svcThreadCreate   rt_CMSIS.o
+    0x0002a92c   0x0000001c   Code   RO         4397    i.svcThreadGetId    rt_CMSIS.o
+    0x0002a948   0x00000038   Code   RO         4401    i.svcThreadTerminate  rt_CMSIS.o
+    0x0002a980   0x0000001a   Code   RO         4403    i.svcTimerCall      rt_CMSIS.o
+    0x0002a99a   0x00000004   Code   RO         4270    i.sysThreadTerminate  RTX_Conf_CM.o
+    0x0002a99e   0x00000002   PAD
+    0x0002a9a0   0x000000b0   Code   RO         4412    i.sysTimerTick      rt_CMSIS.o
+    0x0002aa50   0x00000010   Code   RO         4184    i.thread_terminate_hook  Thread.o
+    0x0002aa60   0x00000048   Code   RO         3732    i.ticker_insert_event  mbed_ticker_api.o
+    0x0002aaa8   0x0000004e   Code   RO         3733    i.ticker_irq_handler  mbed_ticker_api.o
+    0x0002aaf6   0x00000006   Code   RO         3734    i.ticker_read       mbed_ticker_api.o
+    0x0002aafc   0x00000044   Code   RO         3735    i.ticker_remove_event  mbed_ticker_api.o
+    0x0002ab40   0x00000012   Code   RO         3736    i.ticker_set_handler  mbed_ticker_api.o
+    0x0002ab52   0x00000002   PAD
+    0x0002ab54   0x00000018   Code   RO         6391    i.us_ticker_clear_interrupt  us_ticker.o
+    0x0002ab6c   0x00000010   Code   RO         6392    i.us_ticker_disable_interrupt  us_ticker.o
+    0x0002ab7c   0x00000074   Code   RO         6393    i.us_ticker_init    us_ticker.o
+    0x0002abf0   0x0000000c   Code   RO         3750    i.us_ticker_irq_handler  mbed_us_ticker_api.o
+    0x0002abfc   0x0000008c   Code   RO         6394    i.us_ticker_read    us_ticker.o
+    0x0002ac88   0x00000088   Code   RO         6395    i.us_ticker_set_interrupt  us_ticker.o
+    0x0002ad10   0x00000036   Code   RO         4102    i.wait_ms           mbed_wait_api_rtos.o
+    0x0002ad46   0x00000002   PAD
+    0x0002ad48   0x00000080   Code   RO         5425    i.write_buffer_record_find_next  peer_database.o
+    0x0002adc8   0x000001ec   Code   RO         6043    i.write_enqueue     fds.o
+    0x0002afb4   0x0000002c   Code   RO         6989    locale$$code        c_w.l(lc_ctype_c.o)
+    0x0002afe0   0x0000002c   Code   RO         7182    locale$$code        c_w.l(lc_numeric_c.o)
+    0x0002b00c   0x0000004c   Code   RO          252    t._ZN12SingletonPtrIN4rtos5MutexEEptEv  FileBase.o
+    0x0002b058   0x0000000c   Code   RO         6452    t._ZN26FunctionPointerWithContextIP26GattReadAuthCallbackParamsE14functioncallerEPKS2_S1_  main.o
+    0x0002b064   0x0000000c   Code   RO         6449    t._ZN26FunctionPointerWithContextIP27GattWriteAuthCallbackParamsE14functioncallerEPKS2_S1_  main.o
+    0x0002b070   0x0000000c   Code   RO         1738    t._ZN26FunctionPointerWithContextIPK17DiscoveredServiceE14functioncallerEPKS3_S2_  nRF5xGattClient.o
+    0x0002b07c   0x0000000c   Code   RO         6455    t._ZN26FunctionPointerWithContextIPK23GattWriteCallbackParamsE14functioncallerEPKS3_S2_  main.o
+    0x0002b088   0x0000000c   Code   RO         1741    t._ZN26FunctionPointerWithContextIPK24DiscoveredCharacteristicE14functioncallerEPKS3_S2_  nRF5xGattClient.o
+    0x0002b094   0x0000000c   Code   RO         1531    t._ZN26FunctionPointerWithContextIPKN33CharacteristicDescriptorDiscovery25DiscoveryCallbackParams_tEE14functioncallerEPKS4_S3_  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x0002b0a0   0x0000000c   Code   RO         1534    t._ZN26FunctionPointerWithContextIPKN33CharacteristicDescriptorDiscovery27TerminationCallbackParams_tEE14functioncallerEPKS4_S3_  nRF5xCharacteristicDescriptorDiscoverer.o
+    0x0002b0ac   0x0000000c   Code   RO         1658    t._ZN26FunctionPointerWithContextIPKN3Gap29AdvertisementCallbackParams_tEE14functioncallerEPKS4_S3_  nRF5xGap.o
+    0x0002b0b8   0x0000000c   Code   RO         6458    t._ZN26FunctionPointerWithContextIPKN3Gap29DisconnectionCallbackParams_tEE14functioncallerEPKS4_S3_  main.o
+    0x0002b0c4   0x0000000c   Code   RO         1247    t._ZN26FunctionPointerWithContextIPN3BLE32OnEventsToProcessCallbackContextEE14functioncallerEPKS3_S2_  BLE.o
+    0x0002b0d0   0x0000000c   Code   RO         6467    t._ZN26FunctionPointerWithContextIPN3BLE37InitializationCompleteCallbackContextEE14functioncallerEPKS3_S2_  main.o
+    0x0002b0dc   0x0000000c   Code   RO         1655    t._ZN26FunctionPointerWithContextIbE14functioncallerEPKS0_b  nRF5xGap.o
+    0x0002b0e8   0x0000000c   Code   RO         1744    t._ZN26FunctionPointerWithContextItE14functioncallerEPKS0_t  nRF5xGattClient.o
+    0x0002b0f4   0x00000018   Code   RO         6477    t._ZN4mbed8CallbackIFvvEE13function_callINS2_14method_contextI3BLEMS5_FvvEEEEEvPKv  main.o
+    0x0002b10c   0x00000004   Code   RO          490    t._ZN4mbed8CallbackIFvvEE13function_callIPS1_EEvPKv  InterruptIn.o
+    0x0002b110   0x00000002   Code   RO         6483    t._ZN4mbed8CallbackIFvvEE13function_dtorINS2_14method_contextI3BLEMS5_FvvEEEEEvPv  main.o
+    0x0002b112   0x00000002   Code   RO          496    t._ZN4mbed8CallbackIFvvEE13function_dtorIPS1_EEvPv  InterruptIn.o
+    0x0002b114   0x00000014   Code   RO         6480    t._ZN4mbed8CallbackIFvvEE13function_moveINS2_14method_contextI3BLEMS5_FvvEEEEEvPvPKv  main.o
+    0x0002b128   0x0000000a   Code   RO          493    t._ZN4mbed8CallbackIFvvEE13function_moveIPS1_EEvPvPKv  InterruptIn.o
+    0x0002b132   0x00000002   PAD
+    0x0002b134   0x00000028   Code   RO         6461    t._ZN6events10EventQueue13function_callIN4mbed8CallbackIFvvEEEEEvPv  main.o
+    0x0002b15c   0x00000004   Code   RO         6470    t._ZN6events10EventQueue13function_callIPFvvEEEvPv  main.o
+    0x0002b160   0x0000000c   Code   RO         6464    t._ZN6events10EventQueue13function_dtorIN4mbed8CallbackIFvvEEEEEvPv  main.o
+    0x0002b16c   0x00000002   Code   RO         6473    t._ZN6events10EventQueue13function_dtorIPFvvEEEvPv  main.o
+    0x0002b16e   0x0000000a   Code   RO         7240    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x0002b178   0x00000004   Code   RO         6861    x$fpl$printf1       fz_wm.l(printf1.o)
+    0x0002b17c   0x00000004   Code   RO         7078    x$fpl$printf2       fz_wm.l(printf2.o)
+    0x0002b180   0x00000000   Code   RO         7086    x$fpl$usenofp       fz_wm.l(usenofp.o)
+    0x0002b180   0x00000014   Data   RO         1226    .constdata          BLE.o
+    0x0002b194   0x00000010   Data   RO         1365    .constdata          btle.o
+    0x0002b1a4   0x00000010   Data   RO         1394    .constdata          btle_discovery.o
+    0x0002b1b4   0x00000070   Data   RO         1782    .constdata          nRF5xGattServer.o
+    0x0002b224   0x00000018   Data   RO         1834    .constdata          nRF5xServiceDiscovery.o
+    0x0002b23c   0x0000003c   Data   RO         1876    .constdata          nRF5xn.o
+    0x0002b278   0x00000014   Data   RO         3702    .constdata          mbed_lp_ticker_api.o
+    0x0002b28c   0x00000008   Data   RO         3703    .constdata          mbed_lp_ticker_api.o
+    0x0002b294   0x00000014   Data   RO         3751    .constdata          mbed_us_ticker_api.o
+    0x0002b2a8   0x00000008   Data   RO         3752    .constdata          mbed_us_ticker_api.o
+    0x0002b2b0   0x00000017   Data   RO         3979    .constdata          mbed_retarget.o
+    0x0002b2c7   0x00000001   PAD
+    0x0002b2c8   0x00000002   Data   RO         4280    .constdata          RTX_Conf_CM.o
+    0x0002b2ca   0x00000002   PAD
+    0x0002b2cc   0x00000004   Data   RO         4281    .constdata          RTX_Conf_CM.o
+    0x0002b2d0   0x00000004   Data   RO         4282    .constdata          RTX_Conf_CM.o
+    0x0002b2d4   0x00000004   Data   RO         4286    .constdata          RTX_Conf_CM.o
+    0x0002b2d8   0x00000001   Data   RO         4287    .constdata          RTX_Conf_CM.o
+    0x0002b2d9   0x00000003   PAD
+    0x0002b2dc   0x00000014   Data   RO         4288    .constdata          RTX_Conf_CM.o
+    0x0002b2f0   0x00000002   Data   RO         4289    .constdata          RTX_Conf_CM.o
+    0x0002b2f2   0x00000002   PAD
+    0x0002b2f4   0x00000004   Data   RO         4290    .constdata          RTX_Conf_CM.o
+    0x0002b2f8   0x00000001   Data   RO         4291    .constdata          RTX_Conf_CM.o
+    0x0002b2f9   0x00000003   PAD
+    0x0002b2fc   0x00000014   Data   RO         4292    .constdata          RTX_Conf_CM.o
+    0x0002b310   0x00000008   Data   RO         4293    .constdata          RTX_Conf_CM.o
+    0x0002b318   0x00000002   Data   RO         4294    .constdata          RTX_Conf_CM.o
+    0x0002b31a   0x00000002   PAD
+    0x0002b31c   0x00000004   Data   RO         4416    .constdata          rt_CMSIS.o
+    0x0002b320   0x00000001   Data   RO         5285    .constdata          gatts_cache_manager.o
+    0x0002b321   0x00000003   PAD
+    0x0002b324   0x00000010   Data   RO         5286    .constdata          gatts_cache_manager.o
+    0x0002b334   0x00000001   Data   RO         5287    .constdata          gatts_cache_manager.o
+    0x0002b335   0x00000003   PAD
+    0x0002b338   0x0000003c   Data   RO         5583    .constdata          security_dispatcher.o
+    0x0002b374   0x00000014   Data   RO         6045    .constdata          fds.o
+    0x0002b388   0x00000090   Data   RO         6298    .constdata          serial_api.o
+    0x0002b418   0x00000010   Data   RO         6430    .constdata          main.o
+    0x0002b428   0x00000028   Data   RO         6613    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
+    0x0002b450   0x00000011   Data   RO         6633    .constdata          c_w.l(__printf_flags_ss_wp.o)
+    0x0002b461   0x00000003   PAD
+    0x0002b464   0x00000008   Data   RO         6922    .constdata          c_w.l(_printf_wctomb.o)
+    0x0002b46c   0x00000026   Data   RO         7108    .constdata          c_w.l(_printf_fp_hex.o)
+    0x0002b492   0x00000002   PAD
+    0x0002b494   0x00000094   Data   RO         7127    .constdata          c_w.l(bigflt0.o)
+    0x0002b528   0x0000004c   Data   RO         4041    .constdata__ZTV11ManagedFile  mbed_retarget.o
+    0x0002b574   0x00000040   Data   RO         1705    .constdata__ZTV15nRF5xGattClient  nRF5xGattClient.o
+    0x0002b5b4   0x0000002c   Data   RO         1806    .constdata__ZTV15nRF5xGattServer  nRF5xGattServer.o
+    0x0002b5e0   0x00000034   Data   RO         1936    .constdata__ZTV20nRF5xSecurityManager  nRF5xn.o
+    0x0002b614   0x0000001c   Data   RO         1934    .constdata__ZTV21nRF5xServiceDiscovery  nRF5xn.o
+    0x0002b630   0x00000010   Data   RO         1930    .constdata__ZTV38CallChainOfFunctionPointersWithContextIN3Gap15TimeoutSource_tEE  nRF5xn.o
+    0x0002b640   0x00000010   Data   RO         1955    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK10GattClientE  nRF5xn.o
+    0x0002b650   0x00000010   Data   RO         1953    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK10GattServerE  nRF5xn.o
+    0x0002b660   0x00000010   Data   RO         1945    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK15SecurityManagerE  nRF5xn.o
+    0x0002b670   0x00000010   Data   RO         1932    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK21GattHVXCallbackParamsE  nRF5xn.o
+    0x0002b680   0x00000010   Data   RO         1951    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK22GattReadCallbackParamsE  nRF5xn.o
+    0x0002b690   0x00000010   Data   RO         1949    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK23GattWriteCallbackParamsE  nRF5xn.o
+    0x0002b6a0   0x00000010   Data   RO         1943    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPK3GapE  nRF5xn.o
+    0x0002b6b0   0x00000010   Data   RO         1939    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPKN3Gap26ConnectionCallbackParams_tEE  nRF5xn.o
+    0x0002b6c0   0x00000010   Data   RO         1941    .constdata__ZTV38CallChainOfFunctionPointersWithContextIPKN3Gap29DisconnectionCallbackParams_tEE  nRF5xn.o
+    0x0002b6d0   0x00000010   Data   RO         1947    .constdata__ZTV38CallChainOfFunctionPointersWithContextIjE  nRF5xn.o
+    0x0002b6e0   0x0000008c   Data   RO         1928    .constdata__ZTV3Gap  nRF5xn.o
+    0x0002b76c   0x00000044   Data   RO         1896    .constdata__ZTV6nRF5xn  nRF5xn.o
+    0x0002b7b0   0x0000008c   Data   RO         1654    .constdata__ZTV8nRF5xGap  nRF5xGap.o
+    0x0002b83c   0x00000014   Data   RO         1057    .constdata__ZTVN4mbed10TimerEventE  TimerEvent.o
+    0x0002b850   0x0000004c   Data   RO         2335    .constdata__ZTVN4mbed4FileE  File.o
+    0x0002b89c   0x00000014   Data   RO          964    .constdata__ZTVN4mbed6TickerE  Ticker.o
+    0x0002b8b0   0x00000014   Data   RO          983    .constdata__ZTVN4mbed7TimeoutE  Timeout.o
+    0x0002b8c4   0x00000010   Data   RO          249    .constdata__ZTVN4mbed8FileBaseE  FileBase.o
+    0x0002b8d4   0x00000014   Data   RO          250    .constdata__ZZN12SingletonPtrIN4rtos5MutexEE3getEvEs  FileBase.o
+    0x0002b8e8   0x00000022   Data   RO          251    .constdata__ZZN12SingletonPtrIN4rtos5MutexEE3getEvEs_0  FileBase.o
+    0x0002b90a   0x00000002   PAD
+    0x0002b90c   0x0000000c   Data   RO         6476    .constdata__ZZN4mbed8CallbackIFvvEE8generateINS2_14method_contextI3BLEMS5_FvvEEEEEvRKT_E3ops  main.o
+    0x0002b918   0x0000000c   Data   RO          488    .constdata__ZZN4mbed8CallbackIFvvEE8generateIPS1_EEvRKT_E3ops  InterruptIn.o
+    0x0002b924   0x00000005   Data   RO          485    .constdata__ZZNK4mbed8CallbackIFvvEE4callEvEs  InterruptIn.o
+    0x0002b929   0x0000001e   Data   RO          486    .constdata__ZZNK4mbed8CallbackIFvvEE4callEvEs_0  InterruptIn.o
+    0x0002b947   0x00000001   PAD
+    0x0002b948   0x00000020   Data   RO         7382    Region$$Table       anon$$obj.o
+    0x0002b968   0x00000110   Data   RO         6988    locale$$data        c_w.l(lc_ctype_c.o)
+    0x0002ba78   0x0000001c   Data   RO         7181    locale$$data        c_w.l(lc_numeric_c.o)
+    0x0002ba94   0x00000004   Data   RO         6432    .init_array         main.o
+    0x0002ba98   0x00000000   Data   RO         6719    .init_array         c_w.l(init_aeabi.o)
+
+
+    Execution Region RW_IRAM0 (Base: 0x20002ef8, Size: 0x000000d8, Max: 0x000000d8, ABSOLUTE, UNINIT)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20002ef8   0x000000d8   Zero   RW         4927    noinit              reloc_vector_table.o
+
+
+    Execution Region RW_IRAM1 (Base: 0x20002fd0, Size: 0x00002328, Max: 0x0000d030, ABSOLUTE, COMPRESSED[0x00000038])
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20002fd0   0x00000004   Data   RW          237    .data               FileBase.o
+    0x20002fd4   0x00000008   Data   RW         1159    .data               equeue_mbed.o
+    0x20002fdc   0x0000000c   Data   RW         1227    .data               BLE.o
+    0x20002fe8   0x00000001   Data   RW         1366    .data               btle.o
+    0x20002fe9   0x00000003   PAD
+    0x20002fec   0x0000000d   Data   RW         1431    .data               btle_security_pm.o
+    0x20002ff9   0x00000003   PAD
+    0x20002ffc   0x00000004   Data   RW         1458    .data               custom_helper.o
+    0x20003000   0x00000008   Data   RW         1877    .data               nRF5xn.o
+    0x20003008   0x00000008   Data   RW         3704    .data               mbed_lp_ticker_api.o
+    0x20003010   0x00000008   Data   RW         3753    .data               mbed_us_ticker_api.o
+    0x20003018   0x00000004   Data   RW         3980    .data               mbed_retarget.o
+    0x2000301c   0x00000004   Data   RW         3981    .data               mbed_retarget.o
+    0x20003020   0x00000004   Data   RW         4209    .data               Thread.o
+    0x20003024   0x00000004   Data   RW         4247    .data               rtos_idle.o
+    0x20003028   0x00000004   Data   RW         4296    .data               RTX_Conf_CM.o
+    0x2000302c   0x00000014   Data   RW         4297    .data               RTX_Conf_CM.o
+    0x20003040   0x00000010   Data   RW         4298    .data               RTX_Conf_CM.o
+    0x20003050   0x00000004   Data   RW         4299    .data               RTX_Conf_CM.o
+    0x20003054   0x00000004   Data   RW         4300    .data               RTX_Conf_CM.o
+    0x20003058   0x00000010   Data   RW         4417    .data               rt_CMSIS.o
+    0x20003068   0x00000008   Data   RW         4588    .data               rt_OsEventObserver.o
+    0x20003070   0x00000008   Data   RW         4592    .data               rt_Robin.o
+    0x20003078   0x00000008   Data   RW         4620    .data               rt_System.o
+    0x20003080   0x00000008   Data   RW         4644    .data               rt_Task.o
+    0x20003088   0x00000004   Data   RW         4659    .data               rt_Time.o
+    0x2000308c   0x00000004   Data   RW         4701    .data               system_nrf52.o
+    0x20003090   0x0000000c   Data   RW         4811    .data               gpio_api.o
+    0x2000309c   0x00000008   Data   RW         4889    .data               nordic_critical.o
+    0x200030a4   0x00000008   Data   RW         5238    .data               gatt_cache_manager.o
+    0x200030ac   0x0000000c   Data   RW         5288    .data               gatts_cache_manager.o
+    0x200030b8   0x00000050   Data   RW         5584    .data               security_dispatcher.o
+    0x20003108   0x00000020   Data   RW         5609    .data               security_manager.o
+    0x20003128   0x00000018   Data   RW         6046    .data               fds.o
+    0x20003140   0x00000002   Data   RW         6088    .data               fstorage.o
+    0x20003142   0x00000002   PAD
+    0x20003144   0x00000014   Data   RW         6246    .data               softdevice_handler.o
+    0x20003158   0x00000004   Data   RW         6299    .data               serial_api.o
+    0x2000315c   0x00000008   Data   RW         6396    .data               us_ticker.o
+    0x20003164   0x00000008   Data   RW         6431    .data               main.o
+    0x2000316c   0x00000004   Data   RW         6669    .data               c_w.l(stdio_streams.o)
+    0x20003170   0x00000004   Data   RW         6670    .data               c_w.l(stdio_streams.o)
+    0x20003174   0x00000004   Data   RW         6671    .data               c_w.l(stdio_streams.o)
+    0x20003178   0x00000004   Data   RW         6979    .data               c_w.l(streamlock.o)
+    0x2000317c   0x00000010   Data   RW         6047    fs_data             fds.o
+    0x2000318c   0x0000001c   Zero   RW          236    .bss                FileBase.o
+    0x200031a8   0x00000038   Zero   RW         1158    .bss                equeue_mbed.o
+    0x200031e0   0x0000001c   Zero   RW         1225    .bss                BLE.o
+    0x200031fc   0x00000048   Zero   RW         1364    .bss                btle.o
+    0x20003244   0x00000044   Zero   RW         1457    .bss                custom_helper.o
+    0x20003288   0x00000158   Zero   RW         1875    .bss                nRF5xn.o
+    0x200033e0   0x00000160   Zero   RW         3978    .bss                mbed_retarget.o
+    0x20003540   0x00000020   Zero   RW         4271    .bss                RTX_Conf_CM.o
+    0x20003560   0x00000010   Zero   RW         4272    .bss                RTX_Conf_CM.o
+    0x20003570   0x000001cc   Zero   RW         4273    .bss                RTX_Conf_CM.o
+    0x2000373c   0x00000004   PAD
+    0x20003740   0x00000210   Zero   RW         4274    .bss                RTX_Conf_CM.o
+    0x20003950   0x00000084   Zero   RW         4275    .bss                RTX_Conf_CM.o
+    0x200039d4   0x0000001c   Zero   RW         4276    .bss                RTX_Conf_CM.o
+    0x200039f0   0x00000320   Zero   RW         4277    .bss                RTX_Conf_CM.o
+    0x20003d10   0x00000360   Zero   RW         4278    .bss                RTX_Conf_CM.o
+    0x20004070   0x00000800   Zero   RW         4279    .bss                RTX_Conf_CM.o
+    0x20004870   0x00000010   Zero   RW         4415    .bss                rt_CMSIS.o
+    0x20004880   0x00000030   Zero   RW         4540    .bss                rt_List.o
+    0x200048b0   0x00000040   Zero   RW         4643    .bss                rt_Task.o
+    0x200048f0   0x000000a0   Zero   RW         4810    .bss                gpio_api.o
+    0x20004990   0x00000034   Zero   RW         5096    .bss                ble_conn_state.o
+    0x200049c4   0x00000138   Zero   RW         5327    .bss                id_manager.o
+    0x20004afc   0x00000020   Zero   RW         5385    .bss                peer_data_storage.o
+    0x20004b1c   0x00000350   Zero   RW         5426    .bss                peer_database.o
+    0x20004e6c   0x00000040   Zero   RW         5459    .bss                peer_id.o
+    0x20004eac   0x00000020   Zero   RW         5510    .bss                peer_manager.o
+    0x20004ecc   0x0000000c   Zero   RW         5662    .bss                nrf_drv_clock.o
+    0x20004ed8   0x0000006c   Zero   RW         5730    .bss                nrf_drv_gpiote.o
+    0x20004f44   0x00000108   Zero   RW         6044    .bss                fds.o
+    0x2000504c   0x00000058   Zero   RW         6087    .bss                fstorage.o
+    0x200050a4   0x0000000c   Zero   RW         6245    .bss                softdevice_handler.o
+    0x200050b0   0x00000080   Zero   RW         6297    .bss                serial_api.o
+    0x20005130   0x0000006c   Zero   RW         6429    .bss                main.o
+    0x2000519c   0x00000060   Zero   RW         6489    .bss                c_w.l(libspace.o)
+    0x200051fc   0x00000054   Zero   RW         6666    .bss                c_w.l(stdio_streams.o)
+    0x20005250   0x00000054   Zero   RW         6667    .bss                c_w.l(stdio_streams.o)
+    0x200052a4   0x00000054   Zero   RW         6668    .bss                c_w.l(stdio_streams.o)
+

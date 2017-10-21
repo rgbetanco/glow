@@ -1,0 +1,419 @@
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2013 ARM Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <events/mbed_events.h>
+#include <mbed.h>
+#include "ble/BLE.h"
+#include "LEDService.h"
+
+//DigitalOut alivenessLED(LED1, 0);
+//DigitalOut actuatedLED(LED2, 0);
+
+DigitalIn PWR_DET(BUTTON1);         		//19
+InterruptIn BT_PWR_DET(BUTTON1);    		//19
+
+DigitalOut SYS_CE(p28);          			//26 - P0.26 and P0.27 are by default used for the 32 kHz crystal and are not available on the connectors
+DigitalOut PWM_CH1(LED1);            		//12
+DigitalOut PWM_CH2(LED2);            		//13
+PwmOut CTRL_A(LED3);             			//18
+PwmOut CTRL_B(LED4);             			//17
+
+const static char     DEVICE_NAME[] = "GLOW_LED";
+static const uint16_t uuid16_list[] = {LEDService::LED_SERVICE_UUID};
+
+short counter = 0;
+short setPeriod = 0;
+short setEffect = 0;
+double Abrightness = 0.1;
+double Bbrightness = 0.1;
+double flashon = 0.1;
+double flashoff = 0.8;
+double steadyondelay = 0.001;                                                   //delay for steady on function
+double twinkledelayone = 0.1;
+double twinkledelayfour = 0.4;
+double flashdelay = 0.5;
+double chBrightness = 0.6;
+
+short defaultHours = 4;
+short scheduleFlag = 0;
+short scheduleEffect = 0;
+uint8_t seconds = 1;
+int scheduleTimeOut = 4*60;
+int scheduleTwentyFourHours = 20*60;
+int totalTime = 0;
+
+Timer t;
+Timeout tout;
+short timerOverflow = 80;
+uint16_t command = 0;
+uint16_t bleData = 0;
+uint16_t minutes = 0;
+
+void flash(){ 
+    //the original design has a flashy effect
+    uint8_t i = 0;
+    while (i < 10){
+        PWM_CH1 = 0;
+        //ctrlA.write(Abrightness);
+        wait(0.001);
+        PWM_CH2 = 0;
+        //ctrlB.write(Bbrightness);
+        wait(0.001);
+        i++;
+    }
+    PWM_CH1.write(1);
+    PWM_CH2.write(1);
+    //ctrlA = 1;
+    //ctrlB = 1;
+    wait(0.5);                  
+}
+
+void twinkle (){
+//    ctrlA.write(Abrightness);
+    PWM_CH1 = 0;
+    wait(twinkledelayone);
+    PWM_CH1 = 1;
+//    ctrlA = 1;
+    wait(twinkledelayfour);
+    PWM_CH2 = 0;
+//    ctrlB.write(Bbrightness);
+    wait(twinkledelayone);
+    PWM_CH2 = 1;
+//    ctrlB = 1;
+    wait(twinkledelayfour);
+}
+
+void initEffect(){
+//    ctrlA = 1;
+    PWM_CH1 = 1;
+    wait(0.001);
+    PWM_CH2 = 1;
+//    ctrlB = 1;
+    wait(0.01);
+}
+
+void pulse(){
+    double brightnessA = 1;
+    double brightnessB = 1;
+    PWM_CH1 = 0;
+    PWM_CH2 = 0;
+    CTRL_A.write(brightnessA);
+    //ctrlA.write(brightnessA);
+    int i = 0;
+    while(i <= 50){
+        i++;
+        brightnessA -= 0.02;
+        CTRL_A.write(brightnessA);
+        //ctrlA.write(brightnessA);
+        wait(0.01); 
+    }
+    wait(0.5);
+    CTRL_B.write(brightnessB);
+    int j = 0;
+    while(j <= 50){
+        j++;
+        brightnessB -= 0.02;
+        CTRL_B.write(brightnessB);
+        wait(0.01);
+    }
+    wait(0.5);
+}
+
+void fade(){
+    double brightness = 1;
+    //ctrlA.write(brightness);
+    PWM_CH1 = 0;
+    PWM_CH2 = 0;
+    CTRL_A.write(brightness);
+    int i = 0;
+    while(i <= 10){
+        i++;
+        brightness -= 0.1;
+        CTRL_A.write(brightness);
+        //ctrlA.write(brightness);
+        wait(0.01);
+        //ctrlB.write(brightness);
+        CTRL_B.write(brightness);
+        wait(0.1); 
+    }
+    int j = 0;
+    while(j <= 10){
+        j++;
+        brightness += 0.1;
+        //ctrlA.write(brightness);
+        CTRL_A.write(brightness);
+        wait(0.01);
+        //ctrlB.write(brightness);
+        CTRL_B.write(brightness);
+        wait(0.1); 
+    }
+}
+
+void steadyon(){
+    //the original design produce a noticable flashing because the pwm need some time to work
+    //ctrlA.write(Abrightness);
+    CTRL_A.write(Abrightness);
+    wait(0.001);
+    CTRL_B.write(Bbrightness);
+
+    PWM_CH1 = 0;
+    PWM_CH2 = 0;
+
+    /*
+    PWM_CH1 = 0;
+    CTRL_A.write(Abrightness);
+    wait(0.001);
+    PWM_CH2 = 0;                          
+    //ctrlB.write(Bbrightness);
+    CTRL_B.write(Bbrightness);
+    */
+}
+
+void steadyoff(){
+    //ctrlA = 1;
+    //wait(0.001);
+    //ctrlB = 1;
+    SYS_CE = 1;    
+}
+
+void combo(){
+    t.start();
+    t.reset();
+    while( t.read() < 5){
+        steadyon();
+        if(setEffect != 5){return;};
+    }
+    t.reset();
+    while( t.read() < 5){
+        twinkle();
+        if(setEffect != 5){return;};
+    }
+    t.stop();
+    int i=0;
+    while(i < 2){
+        i++;
+        fade();
+        if(setEffect != 5){return;};    
+    }
+    i = 0;
+    while(i < 4){
+        i++;
+        pulse();
+        if(setEffect != 5){return;};    
+    }
+    t.start();
+    t.reset();
+    while(t.read() < 5){
+        flash();
+        if(setEffect != 5){return;};    
+    }
+    t.reset();
+    t.stop();
+    wait(0.001);
+}
+
+void play(void){
+    short effect = setEffect;
+    if(effect == 0){
+        steadyon();  
+    } else if(effect == 1){
+        twinkle();   
+    } else if(effect == 2){
+        fade();
+    } else if(effect == 3){
+        pulse();
+    } else if(effect == 4){
+        flash();
+    } else if(effect == 5){
+        combo();
+    } else if(effect == 6){
+        steadyoff();
+    }
+}
+
+void keyReleased(void){
+    if(setPeriod == 0){
+        initEffect();
+        setEffect++;
+        if(setEffect > 6){
+            SYS_CE = 1;
+            setEffect = 0;
+        }
+    }
+}
+
+void keyPressed(void){
+    setPeriod = 0;
+//    led1 = 1;               //turn off the led 1
+}
+
+void setScheduleTimeOut(int sec, int sec2){
+    scheduleTimeOut = sec;
+    scheduleTwentyFourHours = sec2;
+}
+
+void scheduleTime(){
+    if (scheduleFlag){
+       if(scheduleTimeOut >= minutes ){
+        setEffect = scheduleEffect;
+       } else {
+         totalTime = scheduleTimeOut + scheduleTwentyFourHours;
+         if(totalTime >= minutes){
+             setEffect = 6;
+         } else {
+            minutes = 0;
+            //seconds = 0;
+         }
+       }
+    }    
+}
+
+void updateMinutes(void){
+    minutes++;
+    scheduleTime();
+}
+
+void inputCheck(){
+     
+     while(!PWR_DET){  //!bt1
+            counter++;
+            wait(0.01); 
+            if(counter > timerOverflow){
+                minutes = 0;
+                seconds = 0;
+                scheduleFlag = 1;
+                scheduleEffect = setEffect;
+            //    led1 = 0;
+                setPeriod = 1;
+            } else {
+                scheduleFlag = 0;
+            //    led1 = 1;    
+            }
+        } 
+        counter = 0;
+}
+
+static EventQueue eventQueue(
+    /* event count */ 10 * /* event size */ 32
+);
+
+LEDService *ledServicePtr;
+
+void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params)
+{
+    (void) params;
+    BLE::Instance().gap().startAdvertising();
+}
+
+void blinkCallback(void)
+{
+//	inputCheck();
+//    play();
+//    alivenessLED = !alivenessLED; /* Do blinky on LED1 to indicate system aliveness. */
+}
+
+/**
+ * This callback allows the LEDService to receive updates to the ledState Characteristic.
+ *
+ * @param[in] params
+ *     Information about the characterisitc being updated.
+ */
+void onDataWrittenCallback(const GattWriteCallbackParams *params) {
+    if ((params->handle == ledServicePtr->getValueHandle()) && (params->len == 1)) {
+       // actuatedLED = *(params->data);
+    }
+}
+
+/**
+ * This function is called when the ble initialization process has failled
+ */
+void onBleInitError(BLE &ble, ble_error_t error)
+{
+    /* Initialization error handling should go here */
+}
+
+/**
+ * Callback triggered when the ble initialization process has finished
+ */
+void bleInitComplete(BLE::InitializationCompleteCallbackContext *params)
+{
+    BLE&        ble   = params->ble;
+    ble_error_t error = params->error;
+
+    if (error != BLE_ERROR_NONE) {
+        /* In case of error, forward the error handling to onBleInitError */
+        onBleInitError(ble, error);
+        return;
+    }
+
+    /* Ensure that it is the default instance of BLE */
+    if(ble.getInstanceID() != BLE::DEFAULT_INSTANCE) {
+        return;
+    }
+
+    ble.gap().onDisconnection(disconnectionCallback);
+    ble.gattServer().onDataWritten(onDataWrittenCallback);
+
+    bool initialValueForLEDCharacteristic = false;
+    ledServicePtr = new LEDService(ble, initialValueForLEDCharacteristic);
+
+    /* setup advertising */
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, (uint8_t *)uuid16_list, sizeof(uuid16_list));
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)DEVICE_NAME, sizeof(DEVICE_NAME));
+    ble.gap().setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
+    ble.gap().setAdvertisingInterval(1000); /* 1000ms. */
+    ble.gap().startAdvertising();
+}
+
+void scheduleBleEventsProcessing(BLE::OnEventsToProcessCallbackContext* context) {
+    BLE &ble = BLE::Instance();
+    eventQueue.call(Callback<void()>(&ble, &BLE::processEvents));
+}
+
+int main()
+{
+
+//	led1 = 0; //led2 = 0;
+    SYS_CE = 0;
+    CTRL_A.period_ms(10);                   //100Hz frequency
+    CTRL_A.write(Abrightness);
+    wait(0.001);
+    CTRL_B.period_ms(10);
+    CTRL_B.write(Bbrightness);
+
+    PWM_CH1 = 1;
+    PWM_CH2 = 1;
+
+    BT_PWR_DET.fall(&keyPressed);
+    BT_PWR_DET.rise(&keyReleased);
+
+    Ticker tick;
+    tick.attach(updateMinutes, 60);
+    eventQueue.call_every(1, blinkCallback);
+
+    BLE &ble = BLE::Instance();
+    ble.onEventsToProcess(scheduleBleEventsProcessing);
+    ble.init(bleInitComplete);
+
+    while(true){
+  //  	inputCheck();
+    	play();
+  //  	eventQueue.dispatch_forever();
+    }
+
+    return 0;
+}

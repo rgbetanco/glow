@@ -1,0 +1,13 @@
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: .\mbed-os\features\FEATURE_BLE\source\GapScanningParams.cpp
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: .\BUILD\NRF52_DK\ARM\mbed_config.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/Gap.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/BLEProtocol.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/GapAdvertisingData.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/blecommon.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/GapAdvertisingParams.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/GapScanningParams.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/GapEvents.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/CallChainOfFunctionPointersWithContext.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/FunctionPointerWithContext.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/SafeBool.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\FEATURE_BLE\source\GapScanningParams.o: ./mbed-os/features/FEATURE_BLE/ble/deprecate.h

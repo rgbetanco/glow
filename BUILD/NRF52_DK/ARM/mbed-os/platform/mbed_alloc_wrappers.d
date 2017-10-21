@@ -1,0 +1,11 @@
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: .\mbed-os\platform\mbed_alloc_wrappers.cpp
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: .\BUILD\NRF52_DK\ARM\mbed_config.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/mbed_mem_trace.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/mbed_stats.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/mbed_toolchain.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/mbed_preprocessor.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/SingletonPtr.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/mbed_assert.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/rtos/rtx/TARGET_CORTEX_M/cmsis_os.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/platform/PlatformMutex.h
+.\BUILD\NRF52_DK\ARM\mbed-os\platform\mbed_alloc_wrappers.o: ./mbed-os/rtos/Mutex.h

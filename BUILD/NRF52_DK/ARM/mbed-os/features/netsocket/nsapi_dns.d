@@ -1,0 +1,16 @@
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: .\mbed-os\features\netsocket\nsapi_dns.cpp
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: .\BUILD\NRF52_DK\ARM\mbed_config.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: .\mbed-os\features\netsocket\nsapi_dns.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: .\mbed-os\features\netsocket\nsapi_types.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/features/netsocket/NetworkStack.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/features/netsocket/SocketAddress.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/platform/mbed_toolchain.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/platform/mbed_preprocessor.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/features/netsocket/NetworkInterface.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/features/netsocket/UDPSocket.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/features/netsocket/Socket.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/rtos/Mutex.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/rtos/rtx/TARGET_CORTEX_M/cmsis_os.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/platform/Callback.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/platform/mbed_assert.h
+.\BUILD\NRF52_DK\ARM\mbed-os\features\netsocket\nsapi_dns.o: ./mbed-os/rtos/Semaphore.h

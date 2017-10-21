@@ -1,0 +1,99 @@
+[
+    {
+        "module": "Fill", 
+        "size": {
+            ".data": 11, 
+            ".bss": 55, 
+            ".text": 254
+        }
+    }, 
+    {
+        "module": "Misc", 
+        "size": {
+            ".data": 2280, 
+            ".bss": 555, 
+            ".text": 48773
+        }
+    }, 
+    {
+        "module": "drivers", 
+        "size": {
+            ".data": 0, 
+            ".bss": 32, 
+            ".text": 2834
+        }
+    }, 
+    {
+        "module": "features/FEATURE_BLE", 
+        "size": {
+            ".data": 5, 
+            ".bss": 540, 
+            ".text": 16696
+        }
+    }, 
+    {
+        "module": "features/filesystem", 
+        "size": {
+            ".data": 0, 
+            ".bss": 0, 
+            ".text": 628
+        }
+    }, 
+    {
+        "module": "features/netsocket", 
+        "size": {
+            ".data": 0, 
+            ".bss": 0, 
+            ".text": 22
+        }
+    }, 
+    {
+        "module": "hal", 
+        "size": {
+            ".data": 0, 
+            ".bss": 16, 
+            ".text": 551
+        }
+    }, 
+    {
+        "module": "platform", 
+        "size": {
+            ".data": 4, 
+            ".bss": 292, 
+            ".text": 2176
+        }
+    }, 
+    {
+        "module": "rtos", 
+        "size": {
+            ".data": 4, 
+            ".bss": 4, 
+            ".text": 149
+        }
+    }, 
+    {
+        "module": "rtos/rtx", 
+        "size": {
+            ".data": 20, 
+            ".bss": 4278, 
+            ".text": 6143
+        }
+    }, 
+    {
+        "module": "targets/TARGET_NORDIC", 
+        "size": {
+            ".data": 140, 
+            ".bss": 2284, 
+            ".text": 25633
+        }
+    }, 
+    {
+        "summary": {
+            "total_flash": 106323, 
+            "static_ram": 10520, 
+            "stack": 2048, 
+            "heap": 40728, 
+            "total_ram": 53296
+        }
+    }
+]

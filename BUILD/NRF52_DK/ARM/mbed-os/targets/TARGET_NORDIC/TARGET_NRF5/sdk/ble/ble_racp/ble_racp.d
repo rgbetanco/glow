@@ -1,0 +1,14 @@
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: .\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.c
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: .\BUILD\NRF52_DK\ARM\mbed_config.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: .\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_ranges.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_types.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_gap.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_svc.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_l2cap.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_err.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_error.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_gatt.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_gattc.h
+.\BUILD\NRF52_DK\ARM\mbed-os\targets\TARGET_NORDIC\TARGET_NRF5\sdk\ble\ble_racp\ble_racp.o: ./mbed-os/targets/TARGET_NORDIC/TARGET_NRF5/TARGET_MCU_NRF52832/sdk/softdevice/s132/headers/nrf_ble_gatts.h
