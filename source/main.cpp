@@ -630,6 +630,7 @@ int main()
     PWR_DET.fall(&keyPressed);
     
     CTRL_A.period_ms(1);			//Frequency 1Khz ...
+    CTRL_B.period_ms(1);			//Frequency 1Khz ...
 
     set_time(minutes);
 
