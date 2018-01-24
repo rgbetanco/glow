@@ -1,8 +1,8 @@
-..\BUILD\NRF52_DK\GCC_ARM\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.o: \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.c \
- ..\BUILD\NRF52_DK\GCC_ARM\mbed_config.h \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_TypeDef.h \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\RTX_Config.h \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Task.h \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\cmsis_os.h \
- ..\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.h
+BUILD\NRF52_DK\GCC_ARM\mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.o: \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.c \
+ BUILD\NRF52_DK\GCC_ARM\mbed_config.h \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_TypeDef.h \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\RTX_Config.h \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Task.h \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\cmsis_os.h \
+ mbed-os\rtos\rtx\TARGET_CORTEX_M\rt_Time.h

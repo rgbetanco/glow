@@ -2,17 +2,17 @@
     {
         "module": "Fill", 
         "size": {
-            ".data": 11, 
-            ".bss": 55, 
-            ".text": 254
+            ".data": 13, 
+            ".bss": 41, 
+            ".text": 268
         }
     }, 
     {
         "module": "Misc", 
         "size": {
-            ".data": 2280, 
-            ".bss": 555, 
-            ".text": 48773
+            ".data": 2238, 
+            ".bss": 625, 
+            ".text": 47813
         }
     }, 
     {
@@ -20,7 +20,7 @@
         "size": {
             ".data": 0, 
             ".bss": 32, 
-            ".text": 2834
+            ".text": 2749
         }
     }, 
     {
@@ -36,15 +36,7 @@
         "size": {
             ".data": 0, 
             ".bss": 0, 
-            ".text": 628
-        }
-    }, 
-    {
-        "module": "features/netsocket", 
-        "size": {
-            ".data": 0, 
-            ".bss": 0, 
-            ".text": 22
+            ".text": 627
         }
     }, 
     {
@@ -52,15 +44,15 @@
         "size": {
             ".data": 0, 
             ".bss": 16, 
-            ".text": 551
+            ".text": 550
         }
     }, 
     {
         "module": "platform", 
         "size": {
-            ".data": 4, 
-            ".bss": 292, 
-            ".text": 2176
+            ".data": 20, 
+            ".bss": 320, 
+            ".text": 2310
         }
     }, 
     {
@@ -83,16 +75,16 @@
         "module": "targets/TARGET_NORDIC", 
         "size": {
             ".data": 140, 
-            ".bss": 2284, 
-            ".text": 25633
+            ".bss": 2288, 
+            ".text": 25678
         }
     }, 
     {
         "summary": {
-            "total_flash": 106323, 
-            "static_ram": 10520, 
+            "total_flash": 105423, 
+            "static_ram": 10584, 
             "stack": 2048, 
-            "heap": 40728, 
+            "heap": 40664, 
             "total_ram": 53296
         }
     }

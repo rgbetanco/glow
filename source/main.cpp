@@ -21,11 +21,17 @@
 #include "UARTService.h"
 #include "fds.h"
 #include "app_pwm.h"
+#include "DebouncedIn.h"
 
 #define NEED_CONSOLE_OUTPUT 0 /* Set this if you need debug messages on the console;
                                * it will have an impact on code-size and power consumption. */
-#define COMBO_EFFECT 5
-#define PULSE_EFFECT 3
+#define ON_EFFECT 		0
+#define TWINKLE_EFFECT 	1
+#define FADE_EFFECT 	2
+#define PULSE_EFFECT 	3
+#define OFF_EFFECT 		4
+#define COMBO_EFFECT 	5
+
 #if NEED_CONSOLE_OUTPUT
 #define DEBUG(STR) { if (uart) uart->write(STR, strlen(STR)); }
 #else
@@ -35,20 +41,13 @@
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
 #define NUM_PAGES 4
 
-//DigitalIn PWR_DET(BUTTON3);         		//19
-DigitalIn PWR_DET(p19);         			//19
-//InterruptIn BT_PWR_DET(BUTTON3);    		//19
-InterruptIn BT_PWR_DET(p19);    			//19
-
-//DigitalOut SYS_CE(p28);          			//26 - P0.26 and P0.27 are by default used for the 32 kHz crystal and are not available on the connectors
+//DebouncedIn PWR_DET(p19);
+DigitalIn READ_DET(p19);
+InterruptIn PWR_DET(p19);
 DigitalOut SYS_CE(p26);          			//26 - P0.26 and P0.27 are by default used for the 32 kHz crystal and are not available on the connectors
-//DigitalOut PWM_CH1(LED1);            		//12
-DigitalOut PWM_CH1(p12);                    //12  
-//DigitalOut PWM_CH2(LED2);            		//13
-DigitalOut PWM_CH2(p13);					//13  
-//PwmOut CTRL_A(LED3);             			//18
+DigitalOut PWM_CH1(p12);                    //12
+DigitalOut PWM_CH2(p13);					//13
 PwmOut CTRL_A(p18);             			//18
-//PwmOut CTRL_B(LED4);             			//17
 PwmOut CTRL_B(p17);             			//17
 
 Serial pc(USBTX, USBRX);
@@ -64,13 +63,6 @@ uint8_t setPeriod = 0;
 uint8_t setEffect = 0;
 uint8_t Abrightness = 100;
 uint8_t Bbrightness = 100;
-double flashon = 0.1;
-double flashoff = 0.8;
-double steadyondelay = 0.001;                                                   //delay for steady on function
-double twinkledelayone = 0.1;
-double twinkledelayfour = 0.4;
-double flashdelay = 0.5;
-double chBrightness = 0.6;
 
 //temp
 uint8_t lbright = 100;
@@ -88,19 +80,22 @@ Timer t;
 Timeout tout;
 short timerOverflow = 80;
 uint16_t command = 0;
-uint16_t bleData = 0;
-long minutes = 0;
+uint32_t bleData = 0;
+long minutes = 1511388305;
+long tmp_minutes = 0;
+long start_schedule = 0;
+long end_schedule = 4*60*60;
 
-double fadeCounter = 0;
-
-uint8_t pulseChannel = 0;
+//james variables
+bool ready_flag = false;
+//end
 
 uint32_t count;
 
 static volatile uint8_t write_flag=0;
 #define FILE_ID     0x1111
 #define REC_KEY     0x2222
-static uint8_t m_data[2] = {setEffect,Abrightness};
+static uint8_t m_data[22] = {setEffect,Abrightness,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 fds_record_t        record;
 fds_record_desc_t   record_desc;
 fds_record_chunk_t  record_chunk;
@@ -115,10 +110,13 @@ uint8_t brightness_pulse_one = Abrightness;
 uint8_t brightness_pulse_two = 0;
 int change_polarity = 0;
 
-uint16_t combo_effects[10][2] = {{6,0},{6,0},{6,0},{6,0},{6,0},{6,0},{6,0},{6,0},{6,0},{6,0}};
+uint16_t combo_effects[10][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
 uint8_t combo_index = 0;
 uint8_t combo_effect = 0;
-long seconds = 0;
+long local_wait_for = 0;
+int local_combo_index = 0;
+int local_combo_effect = 0;
+uint32_t seconds = 0;
 long wait_for = 0;
 
 int fade_a = 10;
@@ -126,6 +124,9 @@ int fade_c = 20;
 
 int pulse_c = 10;
 int pulse_a = -20;
+short pulse_brightness = 0;
+
+int interrupted = 0;
 
 unsigned concatenate(unsigned x, unsigned y) {
     unsigned pow = 10;
@@ -140,14 +141,11 @@ static ret_code_t fds_test_find_and_delete (void)
 	ftok.p_addr=NULL;
 
 	memset(&ftok, 0x00, sizeof(fds_find_token_t));
-	// Loop and find records with same ID and rec key and mark them as deleted. 
 	while (fds_record_find(FILE_ID, REC_KEY, &record_desc, &ftok) == FDS_SUCCESS)
 	{
 		fds_record_delete(&record_desc);
-		//NRF_LOG_PRINTF("Deleted record ID: %d \r\n",record_desc.record_id);
-	//	// pc.printf("%s%d\n", "Deleted record ID: ",record_desc.record_id);
 	}
-	// call the garbage collector to empty them, don't need to do this all the time, this is just for demonstration
+
 	ret_code_t ret = fds_gc();
 	if (ret != FDS_SUCCESS)
 	{
@@ -163,47 +161,35 @@ static ret_code_t fds_test_find_and_read (void)
 	ftok.p_addr=NULL;
 
 	memset(&ftok, 0x00, sizeof(fds_find_token_t));
-	// Loop and find records with same ID and rec key and mark them as deleted. 
 	while (fds_record_find(FILE_ID, REC_KEY, &record_desc, &ftok) == FDS_SUCCESS)
 	{
-		// // pc.printf("%s%d\n", "Opening record ID ", record_desc.record_id);
 		err_code = fds_record_open(&record_desc, &flash_record);
 		if ( err_code != FDS_SUCCESS)
 		{
 			return err_code;		
 		}
-		
-	//	NRF_LOG_PRINTF("Found Record ID = %d\r\n",record_desc.record_id);
-		// // pc.printf("Data = ");
 		data = (uint8_t *) flash_record.p_data;
 		for (uint8_t i=0;i<flash_record.p_header->tl.length_words;i++)
 		{
-			// // pc.printf("%d\n", data[i]);
 			m_data[i] = data[i];
-			//NRF_LOG_PRINTF("0x%8x ",data[i]);
 		}
-		// // pc.printf("\r\n");
-		// Access the record through the flash_record structure.
-		// Close the record when done.
+	
 		err_code = fds_record_close(&record_desc);
 		if (err_code != FDS_SUCCESS)
 		{
 			return err_code;	
 		}
 	}
-	// call the garbage collector to empty them, don't need to do this all the time, this is just for demonstration
-
+	
 	return NRF_SUCCESS;
 }
 
 
 static ret_code_t fds_test_write(void)
 {
-	  //  // // pc.printf("%s\n", "ready to write to flash");
-		// Set up data.
 		record_chunk.p_data         = m_data;
-		record_chunk.length_words   = 2;
-		// Set up record.
+		record_chunk.length_words   = 22;
+
 		record.file_id              = FILE_ID;
 		record.key              	= REC_KEY;
 		record.data.p_chunks        = &record_chunk;
@@ -212,23 +198,17 @@ static ret_code_t fds_test_write(void)
 		ret_code_t ret = fds_record_write(&record_desc, &record);
 		if (ret != FDS_SUCCESS)
 		{
-			// // pc.printf("%s\n", "Error writing record");
 			return ret;
 		}
-		 // // pc.printf("%s%d \r\n", "Writing Record ID ", record_desc.record_id);
-		 //NRF_LOG_PRINTF("Writing Record ID = %d \r\n",record_desc.record_id);
+	
 		return NRF_SUCCESS;
 }
 
 static ret_code_t fds_test_update(void)
 {
-	  //  // // pc.printf("%s\n", "ready to write to flash");
-		// Set up data.
-		
-		// // pc.printf("%s%d\n", "data 0 : ", m_data[0]);
 		record_chunk.p_data         = m_data;
-		record_chunk.length_words   = 2;
-		// Set up record.
+		record_chunk.length_words   = 22;
+
 		record.file_id              = FILE_ID;
 		record.key              	= REC_KEY;
 		record.data.p_chunks        = &record_chunk;
@@ -238,12 +218,9 @@ static ret_code_t fds_test_update(void)
 
 		if (ret != FDS_SUCCESS)
 		{
-			// // pc.printf("%s\n", "Error updating record");
 			return ret;
 		}
-		 // // pc.printf("%s%d \r\n", "Updating Record ID ", record_desc.record_id);
-		 //NRF_LOG_PRINTF("Writing Record ID = %d \r\n",record_desc.record_id);
-		 // call the garbage collector to empty them, don't need to do this all the time, this is just for demonstration
+		 
 		ret = fds_gc();
 		if (ret != FDS_SUCCESS)
 		{
@@ -254,7 +231,6 @@ static ret_code_t fds_test_update(void)
 
 static ret_code_t fds_read(void)
 {
-		//fds_find_token_t    ftok ={0};//Important, make sure you zero init the ftok token
 		uint32_t *data;
 		uint32_t err_code;
 
@@ -262,14 +238,10 @@ static ret_code_t fds_read(void)
 		ftok.p_addr=NULL;
 
 		memset(&ftok, 0x00, sizeof(fds_find_token_t));
-		
-		// // pc.printf("Start searching... \r\n");
-		// Loop until all records with the given key and file ID have been found.
-		//while (fds_record_find(FILE_ID, REC_KEY, &record_desc, &ftok) == FDS_SUCCESS) {
+
 				 err_code = fds_record_find(FILE_ID, REC_KEY, &record_desc, &ftok);
 				 if ( err_code != FDS_SUCCESS)
 				 {	
-				 	// // pc.printf("%s\n", "Record not found");
 				 	return err_code;		
 				 }
 				err_code = fds_record_open(&record_desc, &flash_record);
@@ -278,113 +250,100 @@ static ret_code_t fds_read(void)
 					return err_code;		
 				}
 				
-			//	NRF_LOG_PRINTF("Found Record ID = %d\r\n",record_desc.record_id);
-				// // pc.printf("Data = ");
 				data = (uint32_t *) flash_record.p_data;
 				for (uint8_t i=0;i<flash_record.p_header->tl.length_words;i++)
 				{
-					// // pc.printf("%d\n", data[i]);
-					//NRF_LOG_PRINTF("0x%8x ",data[i]);
+				
 				}
-				// // pc.printf("\r\n");
-				// Access the record through the flash_record structure.
-				// Close the record when done.
+				
 				err_code = fds_record_close(&record_desc);
 				if (err_code != FDS_SUCCESS)
 				{
 					return err_code;	
 				}
-		//}
 		return NRF_SUCCESS;
 		
 }
 
 void initEffect(){
-
-	CTRL_A.period_us(20);                   		//100Hz frequency
-    CTRL_A.pulsewidth(18);
-    CTRL_A = Abrightness * 0.01;
-    wait(0.001);
-    CTRL_B.period_us(20);
-    CTRL_B.pulsewidth(18);
+    CTRL_A = 0;
     CTRL_B = 0;
-
     PWM_CH1 = 1;
-    PWM_CH2 = 0;
-
+    PWM_CH2 = 1;
 }
 
 void executeCommand(){
 
 	initEffect();
-	
     //COMMNAD SET EFFECTS !AB#
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x42) {
     
-        if(bleData <= 7){
+        if(bleData <= OFF_EFFECT){
             setEffect = bleData;
-           // setPStorage(setEffect, Abrightness, Bbrightness);
         }
         if(bleData == COMBO_EFFECT){
+        	setEffect = COMBO_EFFECT;
         	seconds = 0;
         	combo_index = 0;
         }
+
+        m_data[0] = setEffect;
+        m_data[1] = Abrightness;
+        
+        fds_test_write();
     }
-    //COMMAND SET SCHEDULE ON TIME IN MINUTES !AC###
+    //COMMAND SET SCHEDULE ON TIME IN SECONDS !AL##########
+    if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x4C) {
+    	minutes = bleData;
+    	set_time(minutes);
+    }
+    //COMMAND SET SCHEDULE ON TIME IN SECONDS !AC##########
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x43) {
-        firstOffTimeInMinutes = bleData;
+    	start_schedule = bleData;
     }
     
-    //COMMAND SET SCHEDULE OFF TIME IN MINUTES !AD
+    //COMMAND SET SCHEDULE OFF TIME IN SECONDS !AD##########
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x44) {
-        OnTimeInMinutes = bleData;
+    	end_schedule = bleData;
     }
     
     //COMMAND START SCHEDULE TIMER !AE
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x45) {
-        minutes = 0;
         scheduleFlag = 1;
         scheduleEffect = setEffect;
         seffect = setEffect;
-        setEffect = 6;
-    //    led1 = 0;
+        setEffect = OFF_EFFECT;
+ 
         setPeriod = 1;
     }
     
     //COMMAND STOP SCHEDULE TIMER  !AF
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x46) {
         scheduleFlag = 0;
-   //     led1 = 1;
     }
     
     //COMMAND SET CHANNEL A BRIGHTNESS !AG###
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x47) {
         Abrightness = bleData;
-        if (setEffect == 3)
-        {
-        	brightness_pulse_one = Abrightness;
-			brightness_pulse_two = 0;
-		    change_polarity = 0;
-        }
-      //  setPStorage(setEffect, Abrightness, Bbrightness);
+        m_data[0] = setEffect;
+        m_data[1] = Abrightness;
+        
+        fds_test_write();
     }
     
-    //COMMAND SET CHANNEL A BRIGHTNESS  !AH
+    //COMMAND SET CHANNEL A BRIGHTNESS  !AH - NOT USED
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x48) {
         Bbrightness = bleData;
-      //  setPStorage(setEffect, Abrightness, Bbrightness);
     }
     
-    //COMMAND SET CHANNEL A/B BRIGHTNESS  !AI
+    //COMMAND SET CHANNEL A/B BRIGHTNESS  !AI - NOT USED
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x49) {
         Abrightness = bleData;
         Bbrightness = bleData;
-      //  setPStorage(setEffect, Abrightness, Bbrightness);
     }
     //COMMAND SET CLEAR MEMORY  !AJ
     if((command & 0xFF00) == 0x4100 && (command & 0xFF) == 0x4A){
     	err_code = fds_test_find_and_delete();
-		// pc.printf("%s%d\n","error code", err_code);
 		err_code = fds_test_write();
     }
     //COMMAND SET CLEAR MEMORY  !AK
@@ -395,17 +354,20 @@ void executeCommand(){
     /*******************COMBO************************************/
     //SET COMBO INDEX !CA# (1st)
     if((command & 0xFF00) == 0x4300 && (command & 0xFF) == 0x41){
-    	combo_index = bleData;
+    	local_combo_index = bleData;
     }
     //SET COMBO EFFECT !CB# (2nd)
     if((command & 0xFF00) == 0x4300 && (command & 0xFF) == 0x42){
-    	combo_effect = bleData;
+    	local_combo_effect = bleData;
     }
     //SET COMBO TIME !CC### (3rd)
     if((command & 0xFF00) == 0x4300 && (command & 0xFF) == 0x43){
-    	wait_for = bleData;
-    	combo_effects[combo_index][0] = combo_effect;
-		combo_effects[combo_index][1] = wait_for;
+    	local_wait_for = bleData;
+    	combo_effects[local_combo_index][0] = local_combo_effect;
+		combo_effects[local_combo_index][1] = local_wait_for;
+		m_data[(local_combo_index+1)*2] = local_combo_effect;
+		m_data[((local_combo_index+1)*2)+1] = local_wait_for;
+		fds_test_write();
     }
 }
 
@@ -441,366 +403,98 @@ void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params)
     ble.startAdvertising();
 }
 
-void flash(){
-	double i = Abrightness;
-
-	CTRL_B = 0;
-	PWM_CH1 = 1;
-	PWM_CH2 = 0;
-	while(i < 1){
-		CTRL_A = i;
-		i += 0.01;
-		wait_ms(1);	
-	}
-	while(i > 0){
-		CTRL_A = i;
-		i -= 0.01;
-		wait_ms(1);
-	}
-
-	wait_us(500);
-
-	i = 0;
-	CTRL_A = 0;
-	PWM_CH2 = 1;
-	PWM_CH1 = 0;
-	while(i < 1){
-		CTRL_B = i;
-		i += 0.01;
-		wait_ms(1);	
-	}
-	while(i > 0){
-		CTRL_B = i;
-		i -= 0.01;
-		wait_ms(1);
-	}
-
-	wait_us(500);
-	         
-}
-
 void twinkle (){
-/*
-	double i = Abrightness * 0.01;
-	
-	CTRL_B = 0;
-	PWM_CH1 = 1;
-	CTRL_A = i;
-	PWM_CH2 = 0;
-	wait_ms(100);
-	CTRL_B = i;
-	PWM_CH1 = 0;
-	CTRL_A = 0;
-	PWM_CH2 = 1;
-	wait_ms(400);
-	CTRL_B = i;
-	PWM_CH1 = 0;
-	CTRL_A = 0;
-	PWM_CH2 = 1;
-	wait_ms(100);
-	CTRL_B = i;
-	PWM_CH1 = 0;
-	CTRL_A = 0;
-	PWM_CH2 = 1;
-	wait_ms(100);
 
-    wait(twinkledelayfour);
- */
-
-		PWM_CH1 = 0;
-		wait_ms(rand() % 75 + 125);
-		CTRL_B = 0.01 * ( rand() % 10 + 100 );
-		wait_ms(rand() % 75 + 125);
-		CTRL_B = 0;
-		wait_ms(rand() % 75 + 125);
-		PWM_CH1 = 1;
-		wait_ms(rand() % 75 + 125);
-
-		PWM_CH2 = 0;
-		wait_ms(rand() % 75 + 125);
-		CTRL_A = 0.01 * ( rand() % 10 + 100 );
-		wait_ms(rand() % 75 + 125);
-		CTRL_A = 0;
-		wait_ms(rand() % 75 + 125);
-		PWM_CH2 = 1;
-		wait_ms(rand() % 75 + 125);
+  if(pulse_brightness != Abrightness){
+        pulse_brightness = Abrightness;
+  }
+  initEffect();                		        	 // insure all circuits open
+  brightness_pulse_one = rand() % 75 +25;	 // brightness = random 25 to 100
+  CTRL_A = brightness_pulse_one * 0.01;  	 // Switch A-side LEDs on
+  PWM_CH2 = 0;			      	 // close A-side circuit
+  wait_ms(rand() % 50 + 75);		      	 // Leave on (random 75-125ms 
+  initEffect();                		      	 // insure all circuits open
+  wait_ms(rand() % 100 + 25);		       	 // Stay off (random 25-125ms 
+  brightness_pulse_one = rand() % 75 +25;
+  CTRL_B = brightness_pulse_one * 0.01;	 // Switch A-side LEDs on
+  PWM_CH1 = 0;				 // close A-side circuit
+  wait_ms(rand() % 50 + 75);			 // Leave on (random 75-125ms 
+  initEffect();                		      	 // insure all circuits open
 
 }
 
 void pulse(){
-/*
-	double i = Abrightness * 0.01;
 
-	PWM_CH1 = 0;
-	CTRL_B = 0.01 * pulse_c;
-	wait_ms(1);
-	CTRL_B = 0;
-	PWM_CH1 = 1;
-	wait_ms(1);
-
-	PWM_CH2 = 0;
-	CTRL_A = 0.01 * pulse_c;
-	wait_ms(1);
-	CTRL_A = 0;
-	PWM_CH2 = 1;
-	wait_ms(1);
-
-	pulse_c += pulse_a;
-	if(pulse_c < 10 || pulse_c > i){
-		pulse_a = -pulse_a;
-		pulse_c += pulse_a;
-		if(pulse_a > 0){
-			pulse_a = rand() % 20 + 80;
-		}
-	}
-	*/
-
-// Third version
-
-	double i = Abrightness;
- 	
-	if (brightness_pulse_two < Abrightness && brightness_pulse_one <= Abrightness && change_polarity == 0){
-		brightness_pulse_one -= 1;
-		brightness_pulse_two += 1;
-	} else {
-		change_polarity = 1;
-	}
-
-	if (brightness_pulse_two >= 0 && brightness_pulse_one < Abrightness && change_polarity == 1){
-		brightness_pulse_one += 1;
-		brightness_pulse_two -= 1;	
-	} else {
-		change_polarity = 0;
-	}
-	int k = 0;
-	do {
-	    //j11 = brightness_pulse_one
-	    CTRL_A = (CTRL_A == 0)?brightness_pulse_two * 0.01:0;
-	    PWM_CH2 = (PWM_CH2 == 0)?1:0;
-	    wait_us(200);
-	    //j10 = brightness_pulse_two
-	    CTRL_B = (CTRL_B == 0)?brightness_pulse_one * 0.01:0;
-	    PWM_CH1 = (PWM_CH1 == 0)?1:0;
-	    if(k < 31){
-	    	wait_us(195);	
-	    } else {
-	    	wait_us(180);
-	    }
-	    
-	    k++;
-	} while (k < 32);
-
-/*
-	//first version
-
-	double i = Abrightness * 0.01;
-	long j = 3000;
-	long double r = i / j;
-	long double h = 0;
-
-
-	if(ch == 0){
-
-		if(PWM_CH1 == 1){
-			PWM_CH1 = 0;
-		} else {
-			PWM_CH1 = 1;
-		}
-
-		if(PWM_CH2 == 1){
-			PWM_CH2 = 0;
-		} else {
-			PWM_CH2 = 1;
-		}
-
-		CTRL_B = 0;
-
-		while(j > 0) {
-			
-			CTRL_A = h;
-
-			j--;
-
-			h += r;
-
-			wait_us(200);
-
-		}
-
-		while(j < 3000){
-
-			CTRL_A = h;
-
-			j++;
-			
-			h -= r;
-
-			wait_us(200);
-
-		}
-
-	//	wait_ms(100);
-
-	} else {
-
-		if(PWM_CH1 == 1){
-			PWM_CH1 = 0;
-		} else {
-			PWM_CH1 = 1;
-		}
-
-		if(PWM_CH2 == 1){
-			PWM_CH2 = 0;
-		} else {
-			PWM_CH2 = 1;
-		}
-
-		CTRL_A = 0;
-
-		while(j > 0) {
-			
-			CTRL_B = h;
-
-			j--;
-
-			h += r;
-
-			wait_us(200);
-
-		}
-
-		while(j < 3000){
-
-			CTRL_B = h;
-
-			j++;
-			
-			h -= r;
-
-			wait_us(200);
-
-		}
-
-	}
-	*/
-
+   int c = 1;		// counter;
+   int a = -1;		// counter increment
+   int steps = 100;		// resolution
+   double i = 1;
+   if(pulse_brightness != Abrightness){	// if brightness changed
+        pulse_brightness = Abrightness; 	// reset to new max PWM
+   }
+   do{
+        brightness_pulse_one = i * c;
+        brightness_pulse_two = i * (steps - c);
+        initEffect();
+        CTRL_A = (CTRL_A == 0)?brightness_pulse_two * 0.01:0; //I added (CTRL_A == 0)? assuming that's what the code should look like
+        PWM_CH2 = 0;
+        wait_ms(6);
+        initEffect();
+        CTRL_B = (CTRL_B== 0)?brightness_pulse_one * 0.01:0; // I added (CTRL_B == 0)? assuming that's what the code should look like
+        PWM_CH1 = 0;
+        wait_ms(6);
+        initEffect();
+        c = c + a;
+        if (c < 1||c > steps){
+            a   = -a;
+            c  =  c + a;
+        }
+        if (a   >  0){
+            a   = rand() % 1 + 5;
+        }
+   } while (!(c < 2 && a < 0) && interrupted == 0);   //add code to break loop if button
+        				// pressed or combo effect time expire
 }
 
 void fade(){
-/*
-    double r = fade_c * 0.01;
-    double i = Abrightness * 0.01;
 
-	if(PWM_CH1 == 1){
-		PWM_CH1 = 0;
-		CTRL_A = 0;
-	} else {
-		PWM_CH1 = 1;
-		CTRL_A = i;
-	}
+	double i = Abrightness * 0.01;	// brightness
+    int j = 1000;				// counter
+    int a = 2;				// counter increment
+    double r = i / j; 			// 
+    while(j <1001 && interrupted == 0){
+        // We suggest - add code in condition above to break out on button press or combo effect timeout
+        initEffect();     	// insure all circuits open
+        CTRL_B = i;	  		// Apply brightess/PWM to B-side
+        PWM_CH1 = 0;   		// Switch B-side LEDs on
+        wait_ms(6);        	// Leave B-side LEDs on for 6 ms
+        initEffect();
+        
+        CTRL_A = i; 		// Apply brightess/PWM to A-side
+        PWM_CH2 = 0;   		// Switch A-side LEDs on
+        wait_ms(6);         // Leave A-side LEDs on for 6 m
+        initEffect();
+        j = j - a;			// update counter
+        i = j *  r;			// recalculate brightness
+        if( j < 1){a = -a;} // reverse fade at end of first loop
 
-	wait_ms(5);
-
-	if(PWM_CH2 == 1){
-		PWM_CH2 = 0;
-		CTRL_B = 0;
-	} else {
-		PWM_CH2 = 1;
-		CTRL_B = i;
-	}
-
-	wait_ms(5);
-
-	fade_c += fade_a;
-
-	if(fade_c < 20 || fade_c > 90) {
-		fade_a = -fade_a;
-	}
-*/
-
-	double i = Abrightness * 0.01;
-	int j = 1000;
-	double r = i / j;
-
-	while(j > 0){
-		if(PWM_CH1 == 1){
-			PWM_CH1 = 0;
-			CTRL_A = 0;
-		} else {
-			PWM_CH1 = 1;
-			CTRL_A = i;
-		}
-
-		if(PWM_CH2 == 1){
-			PWM_CH2 = 0;
-			CTRL_B = 0;
-		} else {
-			PWM_CH2 = 1;
-			CTRL_B = i;
-		}
-
-		j--;
-
-		i -= r;
-		wait_us(400);
-
-	}
-	while(j < 1000){
-
-		if(PWM_CH1 == 1){
-			PWM_CH1 = 0;
-			CTRL_A = 0;
-		} else {
-			PWM_CH1 = 1;
-			CTRL_A = i;
-		}
-
-		if(PWM_CH2 == 1){
-			PWM_CH2 = 0;
-			CTRL_B = 0;
-		} else {
-			PWM_CH2 = 1;
-			CTRL_B = i;
-		}
-
-		j++;
-
-		i += r;
-		wait_us(400);
-	}
-	
+   }
+  
 }
 
 void steadyon(){
-/*
+
 	double i = Abrightness * 0.01;
-
-	PWM_CH1 = 0;   				// insures 2nd light off @end of burn time from previous loop               
-	wait_ms(1);              
-	CTRL_B = i;  				// turn first light on              
-	wait_ms(4);                	// burn first light for 16ms              
-	CTRL_B = 0;  				// then turn first light off               
-	wait_ms(1);              
-	PWM_CH1 = 1;  				// and turn on 2nd light              
-	wait_ms(4);   				// burn 2nd light for 16ms
-
-	PWM_CH2 = 0;   				// insures 2nd light off @end of burn time from previous loop               
-	wait_ms(1);              
-	CTRL_A = i;  				// turn first light on              
-	wait_ms(4);                	// burn first light for 16ms              
-	CTRL_A = 0;  				// then turn first light off               
-	wait_ms(1);              
-	PWM_CH2 = 1;  				// and turn on 2nd light              
-	wait_ms(4);   				// burn 2nd light for 16ms
-*/
-	double i = Abrightness * 0.01;
-
-    CTRL_B = (CTRL_B == 0)?i:0;
-    PWM_CH1 = (PWM_CH1 == 0)?1:0;
-    wait_us(800);
-    CTRL_A = (CTRL_A == 0)?i:0;
-    PWM_CH2 = (PWM_CH2 == 0)?1:0;
-    wait_us(600);
+	//code suggested
+	initEffect();
+    CTRL_B = i;		
+    PWM_CH1 = 0;
+    wait_ms(6);	
+    initEffect();		
+    CTRL_A = i;		 
+    PWM_CH2 = 0;
+    wait_ms(6);  
+    initEffect();
 }
 
 void steadyoff(){
@@ -816,16 +510,16 @@ void combo(){
 	localEffect = combo_effects[combo_index][0];
 	wait_for = combo_effects[combo_index][1];
 	
-	if (seconds < wait_for){
-		if(localEffect == 0){
+	if (wait_for > 0 && seconds < wait_for){
+		if(localEffect == ON_EFFECT){
 			steadyon();
-		} else if(localEffect == 1){
+		} else if(localEffect == TWINKLE_EFFECT){
 	        twinkle();   
-	    } else if(localEffect == 2){
+	    } else if(localEffect == FADE_EFFECT){
 	        fade();
 	    } else if(localEffect == PULSE_EFFECT){
 	        pulse();
-	    } else if(localEffect == 6){
+	    } else if(localEffect == OFF_EFFECT){
 	        steadyoff();
 	    }
 	} else {
@@ -844,125 +538,48 @@ void combo(){
 
 void play(void){
     short effect = setEffect;
-    if(effect == 0){
+    if(effect == ON_EFFECT){
         steadyon();  
-    } else if(effect == 1){
+    } else if(effect == TWINKLE_EFFECT){
         twinkle();   
-    } else if(effect == 2){
+    } else if(effect == FADE_EFFECT){
         fade();
     } else if(effect == PULSE_EFFECT){
         pulse();
-    } else if(effect == 4){
-        flash();
-    } else if(effect == COMBO_EFFECT){
-        combo();
-    } else if(effect == 6){
+    } else if(effect == OFF_EFFECT){
         steadyoff();
     }
+}
+
+void keyPressed(void){
+	interrupted = 1;
 }
 
 void keyReleased(void){
     if(setPeriod == 0){
         initEffect();
         setEffect++;
-        if(setEffect > 6){
+        if(setEffect > OFF_EFFECT){
             SYS_CE = 1;
-            setEffect = 0;
-         //   setPStorage(setEffect, Abrightness, Bbrightness);
+            setEffect = ON_EFFECT;
         }
         m_data[0] = setEffect;
         m_data[1] = Abrightness;
         
-        fds_test_update();
-      //  wait(0.5);
-     //	fds_test_find_and_read();
+        fds_test_write();
     }
 }
 
-void keyPressed(void){
-     setPeriod = 0;
-}
-
-
-void scheduleTimeOld(){
-    if (scheduleFlag){
-    	if(minutes <= 1){
-	    	lbright = Abrightness;
-	    	leffect = loop_effect;
-	    	seffect = setEffect;
-    	}
-       if(firstOffTimeInMinutes >= minutes ){
-   	
-       	loop_effect = leffect;
-       	setEffect = seffect;
-       	Abrightness = lbright;
-    
-       } else {
-         totalTime = firstOffTimeInMinutes + OnTimeInMinutes;
-         if(totalTime >= minutes){
-         	 loop_effect = 0;
-         	 Abrightness = 0;
-             setEffect = 6;
-         } else {
-            minutes = 0;
-            Abrightness = lbright;
-            loop_effect = leffect;
-            setEffect = seffect;
-         }
-       }
-    }    
-}
-
 void scheduleTime(){
-	if (scheduleFlag)
-	{
-		if (firstOffTimeInMinutes >= minutes)
-		{
-			setEffect = 6;
-		} else {
-			totalTime = firstOffTimeInMinutes + OnTimeInMinutes;
-			if(totalTime >= minutes)
-			{
-				setEffect = seffect;
-			} else 
-			{	
-				firstOffTimeInMinutes = 24*60*60;
-				minutes = 0;
-			}
-		}
-
+	if(minutes >= start_schedule && minutes < end_schedule){
+		setEffect = scheduleEffect;
+	} else if(minutes == end_schedule) {
+		start_schedule += 24*60*60;
+		end_schedule += 24*60*60;
+	} else {
+		setEffect = OFF_EFFECT;
 	}
 }
-
-void updateMinutes(void){
-    minutes++;
-    scheduleTime();
-}
-
-void updateSeconds(void){
-	seconds++;
-}
-
-void inputCheck(){
-     
-     while(!PWR_DET){  //!bt1
-            counter++;
-            wait(0.01); 
-            if(counter > timerOverflow){
-                minutes = 0;
-                scheduleFlag = 1;
-                scheduleEffect = setEffect;
-            //    led1 = 0;
-                setPeriod = 1;
-            } else {
-                scheduleFlag = 0;
-            //    led1 = 1;    
-            }
-        } 
-        counter = 0;
-}
-
-/* testing code fds */
 
 static void my_fds_evt_handler(fds_evt_t const * const p_fds_evt)
 {
@@ -977,7 +594,6 @@ static void my_fds_evt_handler(fds_evt_t const * const p_fds_evt)
 				case FDS_EVT_WRITE:
 						if (p_fds_evt->result == FDS_SUCCESS)
 						{
-							// pc.printf("%s\n", "Whatever thing was doing is done");
 							write_flag=1;
 						}
 						break;
@@ -992,7 +608,6 @@ static ret_code_t fds_test_init (void)
 
 	if (ret != FDS_SUCCESS)
 	{
-		// pc.printf("%s\n", "not registered");
 		return ret;
 	}
 
@@ -1002,7 +617,6 @@ static ret_code_t fds_test_init (void)
 
 	if (ret != FDS_SUCCESS)
 	{
-		// pc.printf("%s\n", "not initilized");
 		return ret;
 	}
 	
@@ -1010,22 +624,14 @@ static ret_code_t fds_test_init (void)
 		
 }
 
-/* testing code end */
-
 int main()
 {
-//	led1 = 0; //led2 = 0;
     SYS_CE = 0;
-    initEffect();
+    PWR_DET.fall(&keyPressed);
+    
+    CTRL_A.period_ms(1);			//Frequency 1Khz ...
 
-    BT_PWR_DET.fall(&keyPressed);
-    BT_PWR_DET.rise(&keyReleased);
-
-    Ticker tick;
-    tick.attach(updateMinutes, 60);
-
-    Ticker tick2;
-   	tick2.attach(updateSeconds, 1);
+    set_time(minutes);
 
    	ble.init();
     ble.onDisconnection(disconnectionCallback);
@@ -1042,7 +648,6 @@ int main()
                                      (const uint8_t *)UARTServiceUUID_reversed, sizeof(UARTServiceUUID_reversed));
 
 	err_code = fds_test_init();
-	// pc.printf("%s%d\n","error code", err_code);
 	wait(0.5);
 
 	ftok.page=0;
@@ -1053,24 +658,83 @@ int main()
 	if ( err_code != FDS_SUCCESS)
 	{
 		err_code = fds_test_find_and_delete();
-		// pc.printf("%s%d\n","error code", err_code);
 		wait(0.5);
 	 	err_code =fds_test_write();		
 	} else {
 		err_code = fds_test_find_and_read();
 		setEffect = m_data[0];
 		Abrightness = m_data[1];
+		combo_effects[0][0] = m_data[2];
+		combo_effects[0][1] = m_data[3];
+		combo_effects[1][0] = m_data[4];
+		combo_effects[1][1] = m_data[5];
+		combo_effects[2][0] = m_data[6];
+		combo_effects[2][1] = m_data[7];
+		combo_effects[3][0] = m_data[8];
+		combo_effects[3][1] = m_data[9];
+		combo_effects[4][0] = m_data[10];
+		combo_effects[4][1] = m_data[11];
+		combo_effects[5][0] = m_data[12];
+		combo_effects[5][1] = m_data[13];
+		combo_effects[6][0] = m_data[14];
+		combo_effects[6][1] = m_data[15];
+		combo_effects[7][0] = m_data[16];
+		combo_effects[7][1] = m_data[17];
+		combo_effects[8][0] = m_data[18];
+		combo_effects[8][1] = m_data[19];
+		combo_effects[9][0] = m_data[20];
+		combo_effects[9][1] = m_data[21];
 	}
 
-	//wait until the write is finished. 
-	//while (write_flag==0);
-
-    ble.setAdvertisingInterval(1000); /* 100ms; in multiples of 0.625ms. */
+    ble.setAdvertisingInterval(5000); /* 100ms; in multiples of 0.625ms. */
     ble.startAdvertising();
-
+    initEffect();
+    int init = 0;
+ 
     while(true){
     	ble.waitForEvent();
-    	inputCheck();
+    	if(interrupted == 1){
+    		interrupted = 0;
+			while(!READ_DET.read()){
+				init++;
+	    		if(init <= 1){
+					setEffect++;
+					if(setEffect > OFF_EFFECT){
+			            SYS_CE = 1;
+			            setEffect = ON_EFFECT;
+		         	}
+				} else if(init > 1 && init <= 5){
+					//this will be change to auto time or something
+					scheduleFlag = 1;
+			        scheduleEffect = setEffect;
+			        seffect = setEffect;
+			        setEffect = OFF_EFFECT;
+			        setPeriod = 1;
+				} else if(init > 5) {
+					setEffect = OFF_EFFECT;
+					initEffect();
+					steadyoff();
+				}
+				wait(1);
+			}
+		}
+
+		if(init > 0){
+			m_data[0] = setEffect;
+			fds_test_write();
+			init = 0;
+			if(setEffect != OFF_EFFECT){
+				initEffect();
+			}
+		}
+			
+        time_t tmp_minutes = time(NULL); //this are seconds - miss-named for minutes for previous code
+        if(scheduleFlag || setEffect == COMBO_EFFECT){
+        	if(minutes != tmp_minutes){
+        		minutes = tmp_minutes;
+        		seconds++;
+        	}
+        }
     	if(setEffect == COMBO_EFFECT){
     		combo();
     	} else {
